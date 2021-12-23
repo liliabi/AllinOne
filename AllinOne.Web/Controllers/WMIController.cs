@@ -15,10 +15,9 @@ namespace AllinOne.Web.Controllers
         {
             try
             {
-                var wmi = db.WmiServerList.OrderBy(f => f.CreateTime).ToList();
-                return View(wmi);
+                return View();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View();
             }
@@ -26,6 +25,20 @@ namespace AllinOne.Web.Controllers
 
         }
 
+        public ActionResult List()
+        {
+            try
+            {
+                var wmi = db.WmiServerList.OrderBy(f => f.CreateTime).ToList();
+                return View(wmi);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+
+
+        }
         // GET: WMI/Details/5
         public ActionResult Details(string sguid)
         {

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AllinOne.Entity.WmiServerList>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>显示</h2>
+
+<p>
+    @Html.ActionLink("创建", "Create")
+</p>
+<table class="table table-striped table-bordered table-condensed table-hover">
+    <tr>
+        <th>
+            @Html.DisplayName("服务器名")
+        </th>
+        <th>
+            @Html.DisplayName("服务器IP")
+        </th>
+        <th>
+            @Html.DisplayName("服务器描述")
+        </th>
+        <th>
+            @Html.DisplayName("服务器类型")
+        </th>
+        <th>
+            @Html.DisplayName("登陆用户名")
+        </th>
+        <th>
+            @Html.DisplayName("创建人")
+        </th>
+        <th>
+            @Html.DisplayName("创建时间")
+        </th>
+        <th>
+            @Html.DisplayName("更新人")
+        </th>
+        <th>
+            @Html.DisplayName("更新时间")
+        </th>
+        <th>操作</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServerIP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServerDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServerType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { sguid = item.SGUID }) |
+                @Html.ActionLink("Details", "Details", new { sguid = item.SGUID }) |
+                @Html.ActionLink("Delete", "Delete", new { sguid = item.SGUID })
+            </td>
+        </tr>
+    }
+
+</table>
