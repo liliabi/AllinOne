@@ -1,0 +1,98 @@
+﻿@model AllinOne.Entity.WmiServerList
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WmiServerList</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ServerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServerIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServerDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserPwd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserPwd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServerType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { sguid = Model.SGUID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

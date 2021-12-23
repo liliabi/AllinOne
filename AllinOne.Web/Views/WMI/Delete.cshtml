@@ -1,0 +1,97 @@
+﻿@model AllinOne.Entity.WmiServerList
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>删除</h2>
+
+<h3>确定要删除此记录吗?</h3>
+<div>
+    <h4>WMI服务器清单</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("服务器名")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("服务器IP")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("服务器描述")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("登陆用户名")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("服务器类型")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServerType)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("创建人")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("创建时间")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("更新人")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updator)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("更新时间")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateTime)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

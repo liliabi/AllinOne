@@ -9,20 +9,28 @@ namespace AllinOne.Web.Controllers
 {
     public class WMIController : Controller
     {
+        private AllinOneModel db = new AllinOneModel();
         // GET: WMI
         public ActionResult Index()
         {
-            using (AllinOneModel db = new AllinOneModel())
+            try
             {
-               var wmi =  db.WmiServerList.ToList();
+                var wmi = db.WmiServerList.OrderBy(f => f.CreateTime).ToList();
+                return View(wmi);
             }
+            catch (Exception ex)
+            {
                 return View();
+            }
+
+
         }
 
         // GET: WMI/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string sguid)
         {
-            return View();
+            var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+            return View(wmi);
         }
 
         // GET: WMI/Create
@@ -33,13 +41,23 @@ namespace AllinOne.Web.Controllers
 
         // POST: WMI/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ServerName,ServerIP,ServerDesc,UserId,UserPwd,ServerType,Creator")] WmiServerList wmiServerList)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    wmiServerList.SGUID = Guid.NewGuid().ToString();
+                    wmiServerList.CreateTime = DateTime.Now;
+
+                    db.WmiServerList.Add(wmiServerList);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return View();
             }
             catch
             {
@@ -48,19 +66,41 @@ namespace AllinOne.Web.Controllers
         }
 
         // GET: WMI/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string sguid)
         {
-            return View();
+            if (!string.IsNullOrWhiteSpace(sguid))
+            {
+                var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+                if (wmi != null)
+                {
+                    return View(wmi);
+                }
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: WMI/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string sguid, WmiServerList wmiServerList)
         {
             try
             {
                 // TODO: Add update logic here
-
+                if (ModelState.IsValid)
+                {
+                    var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+                    if (wmi != null)
+                    {
+                        wmi.ServerIP = wmiServerList.ServerIP;
+                        wmi.ServerDesc = wmiServerList.ServerDesc;
+                        wmi.ServerType = wmiServerList.ServerType;
+                        wmi.Updator = wmiServerList.Updator;
+                        wmi.UpdateTime = DateTime.Now;
+                        wmi.UserId = wmiServerList.UserId;
+                        wmi.UserPwd = wmiServerList.UserPwd;
+                        db.SaveChanges();
+                    }
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -70,19 +110,25 @@ namespace AllinOne.Web.Controllers
         }
 
         // GET: WMI/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string sguid)
         {
-            return View();
+            var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+            return View(wmi);
         }
 
         // POST: WMI/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string sguid, WmiServerList wmiServerList)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+                if (wmi != null)
+                {
+                    db.WmiServerList.Remove(wmi);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             catch
