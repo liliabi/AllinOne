@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllinOne.Web", "AllinOne.Web\AllinOne.Web.csproj", "{0637237A-5968-4684-91EB-D35CD88F01C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A1569C56-6911-4A31-ABBA-E2F8146E48F5} = {A1569C56-6911-4A31-ABBA-E2F8146E48F5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllinOne.Entity", "AllinOne.Entity\AllinOne.Entity.csproj", "{A1569C56-6911-4A31-ABBA-E2F8146E48F5}"
 EndProject
