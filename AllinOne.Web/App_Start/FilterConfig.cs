@@ -7,7 +7,9 @@ namespace AllinOne.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomHandleErrorAttribute(), 1);
+            filters.Add(new HandleErrorAttribute(), 2);
+
         }
     }
 }

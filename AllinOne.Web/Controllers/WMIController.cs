@@ -24,17 +24,19 @@ namespace AllinOne.Web.Controllers
 
 
         }
-
+        [CustomHandleErrorAttribute]
         public ActionResult List()
         {
             try
             {
+
                 var wmi = db.WmiServerList.OrderBy(f => f.CreateTime).ToList();
                 return View(wmi);
             }
             catch (Exception)
             {
-                return View();
+                throw;
+                //return View();
             }
 
 
@@ -47,6 +49,7 @@ namespace AllinOne.Web.Controllers
         }
 
         // GET: WMI/Create
+        [CustomHandleErrorAttribute]
         public ActionResult Create()
         {
             return View();
@@ -57,6 +60,7 @@ namespace AllinOne.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ServerName,ServerIP,ServerDesc,UserId,UserPwd,ServerType,Creator")] WmiServerList wmiServerList)
         {
+
             try
             {
                 if (ModelState.IsValid)
