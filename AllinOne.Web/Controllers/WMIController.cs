@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AllinOne.Business;
 using AllinOne.Entity;
 
 namespace AllinOne.Web.Controllers
@@ -10,6 +11,7 @@ namespace AllinOne.Web.Controllers
     public class WMIController : Controller
     {
         private AllinOneModel db = new AllinOneModel();
+        private WMIManager wmiManager = new WMIManager();
         // GET: WMI
         public ActionResult Index()
         {
@@ -29,8 +31,7 @@ namespace AllinOne.Web.Controllers
         {
             try
             {
-
-                var wmi = db.WmiServerList.OrderBy(f => f.CreateTime).ToList();
+                var wmi = wmiManager.GetAll();
                 return View(wmi);
             }
             catch (Exception)
