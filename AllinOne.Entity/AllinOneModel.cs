@@ -12,6 +12,7 @@ namespace AllinOne.Entity
         {
         }
 
+        public virtual DbSet<SysSerialNumber> SysSerialNumber { get; set; }
         public virtual DbSet<WmiServerList> WmiServerList { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

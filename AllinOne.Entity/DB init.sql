@@ -1,0 +1,160 @@
+﻿USE [master]
+GO
+
+/****** Object:  Database [AllinOne]    Script Date: 2022/01/04 17:07:53 ******/
+CREATE DATABASE [AllinOne] ON  PRIMARY 
+( NAME = N'AllinOne', FILENAME = N'D:\DB\AllinOne.mdf' , SIZE = 3072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'AllinOne_log', FILENAME = N'D:\DB\AllinOne_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+
+ALTER DATABASE [AllinOne] SET COMPATIBILITY_LEVEL = 100
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [AllinOne].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [AllinOne] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [AllinOne] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [AllinOne] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [AllinOne] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [AllinOne] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET RECOVERY SIMPLE 
+GO
+
+ALTER DATABASE [AllinOne] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [AllinOne] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [AllinOne] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [AllinOne] SET  READ_WRITE 
+GO
+
+
+USE [AllinOne]
+GO
+
+/****** Object:  Table [dbo].[SysSerialNumber]    Script Date: 2022/01/04 17:08:13 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SysSerialNumber](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Project] [nvarchar](50) NOT NULL,
+	[SeqNoDate] [date] NULL,
+	[MaxSeqNo] [bigint] NOT NULL,
+ CONSTRAINT [PK_SysSerialNumber] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+USE [AllinOne]
+GO
+
+/****** Object:  Table [dbo].[WmiServerList]    Script Date: 2022/01/04 17:08:37 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[WmiServerList](
+	[SGUID] [nvarchar](100) NOT NULL,
+	[ServerName] [nvarchar](max) NOT NULL,
+	[ServerIP] [nvarchar](max) NOT NULL,
+	[ServerDesc] [nvarchar](max) NULL,
+	[UserId] [nvarchar](max) NOT NULL,
+	[UserPwd] [nvarchar](max) NOT NULL,
+	[ServerType] [nvarchar](max) NOT NULL,
+	[Creator] [nvarchar](max) NOT NULL,
+	[CreateTime] [datetime] NOT NULL,
+	[Updator] [nvarchar](max) NULL,
+	[UpdateTime] [datetime] NULL,
+	[Ver] [timestamp] NOT NULL,
+ CONSTRAINT [PK_WmiServerList] PRIMARY KEY CLUSTERED 
+(
+	[SGUID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'服务器分类' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerList', @level2type=N'COLUMN',@level2name=N'ServerType'
+GO
+
+
