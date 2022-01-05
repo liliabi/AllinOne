@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using AllinOne.Business;
 using AllinOne.Entity;
+using AllinOne.Entity.ViewModel;
 
 namespace AllinOne.Web.Controllers
 {
@@ -17,6 +21,7 @@ namespace AllinOne.Web.Controllers
         {
             try
             {
+                //RESTfulResult res = WMIManager.TryPing("127.0.0.1");
                 return View();
             }
             catch (Exception)
@@ -26,6 +31,37 @@ namespace AllinOne.Web.Controllers
 
 
         }
+
+        public ActionResult Ping(string ServerIP)
+        {
+            try
+            {
+                RESTfulResult res = WMIManager.TryPing(ServerIP);
+                if (res.Succeeded)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(string.Format("答复主机地址:{0};", ((PingReply)res.Data).Address.ToString()));
+                    sb.Append(string.Format("往返时间:{0};", ((PingReply)res.Data).RoundtripTime.ToString()));
+                    sb.Append(string.Format("生存时间(TTL):{0};", ((PingReply)res.Data).Options.Ttl.ToString()));
+                    sb.Append(string.Format("是否控制数据包分段:{0};", ((PingReply)res.Data).Options.DontFragment.ToString()));
+                    sb.Append(string.Format("缓冲区大小:{0};", ((PingReply)res.Data).Buffer.Length));
+                    ViewBag.result = ServerIP + "已Ping通!";
+                    ViewBag.message = sb;
+                }
+                else
+                {
+                    ViewBag.result = ServerIP + "无法Ping通!";
+                    ViewBag.message = "请重试！";
+                }
+                return View(res);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+            
+        }
+
         [CustomHandleErrorAttribute]
         public ActionResult List()
         {
@@ -119,7 +155,7 @@ namespace AllinOne.Web.Controllers
                         db.SaveChanges();
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             catch
             {

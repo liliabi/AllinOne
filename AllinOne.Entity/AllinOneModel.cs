@@ -21,5 +21,7 @@ namespace AllinOne.Entity
                 .Property(e => e.Ver)
                 .IsFixedLength();
         }
+
+        public System.Data.Entity.DbSet<AllinOne.Entity.ViewModel.RESTfulResult> RESTfulResults { get; set; }
     }
 }

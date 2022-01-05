@@ -1,0 +1,21 @@
+﻿@model AllinOne.Entity.ViewModel.RESTfulResult
+
+@{
+    ViewBag.Title = "Ping";
+}
+
+<h2>Ping</h2>
+
+<div>
+    <h4>Ping命令</h4>
+    <hr />
+    <ul>
+        <li style="list-style:none">
+            <div>主机状态： @ViewBag.result</div>
+            <div>返回信息： @ViewBag.message</div>
+        </li>
+    </ul>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "List")
+</p>
