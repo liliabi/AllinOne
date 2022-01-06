@@ -11,8 +11,13 @@ namespace AllinOne.Repository
     {
         private AllinOneModel db = new AllinOneModel();
         public List<WmiServerList> GetAll()
-        { 
+        {
             return db.WmiServerList.OrderBy(f => f.CreateTime).ToList();
+        }
+
+        public WmiServerList GetById(string sguid)
+        {
+            return db.WmiServerList.Where(f=>f.SGUID == sguid).FirstOrDefault();
         }
     }
 }

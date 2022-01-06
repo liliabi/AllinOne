@@ -94,6 +94,7 @@
 </div>
 <p>
     @Html.ActionLink("Ping", "Ping", new { ServerIP = Model.ServerIP }) |
+    @Html.ActionLink("WMI", "GetServiceInfo", new { sguid = Model.SGUID }) |
     @Html.ActionLink("Edit", "Edit", new { sguid = Model.SGUID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

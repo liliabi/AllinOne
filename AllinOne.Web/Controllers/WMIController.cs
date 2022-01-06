@@ -59,9 +59,17 @@ namespace AllinOne.Web.Controllers
             {
                 return View();
             }
-            
+
+        }
+        public ActionResult GetServiceInfo(string sguid)
+        {
+            wmiManager.GetServiceInfo(sguid);
+            ViewBag.result = "已获取!";
+            return RedirectToAction("Details");
         }
 
+
+        #region CURD Server List
         [CustomHandleErrorAttribute]
         public ActionResult List()
         {
@@ -190,5 +198,6 @@ namespace AllinOne.Web.Controllers
                 return View();
             }
         }
+        #endregion
     }
 }
