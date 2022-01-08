@@ -60,7 +60,7 @@ namespace AllinOne.Business
             }
             ConnectionOptions conn = new ConnectionOptions();
             conn.Timeout = new TimeSpan(0, 0, 10);
-            
+
             if (wmi.ServerIP != "." || wmi.ServerIP != "127.0.0.1")
             {
                 conn.Username = wmi.UserId;
@@ -76,81 +76,100 @@ namespace AllinOne.Business
             string strQueryCpu = "select * from Win32_Processor";
             objectQuery = new ObjectQuery(strQueryCpu);
             try
-            {
-                ManagementObjectSearcher searcherCpu = GetObjectSearcher(objectQuery, scope);
+            {   
+                WmiServerMain wmiServerMain = new WmiServerMain();
+                wmiServerMain.TicketNo = AllinOne.Business.Common.GetOrderNumber.GetWMINumber("WMITicket");
+                wmiServerMain.SGUID = sguid;
+                wmiServerMain.ServerName = wmi.ServerName;
+                wmiServerMain.ServerIP = wmi.ServerIP;
+                wmiServerMain.ServerDesc = wmi.ServerDesc;
+                wmiServerMain.UserId = wmi.UserId;
+                wmiServerMain.CreateDate = DateTime.Now;
+                wmiServerMain.Creator = "Unknow";
 
+                ManagementObjectSearcher searcherCpu = GetObjectSearcher(objectQuery, scope);
+                List<WmiServerCpu> cpus = new List<WmiServerCpu>();
+                int seq = 1;
                 foreach (ManagementObject item in searcherCpu.Get())
                 {
-                    UInt16 addresswidth = Convert.ToUInt16(item["AddressWidth"]);
-                    UInt16 architecture = Convert.ToUInt16(item["Architecture"]);
-                    string assettag = item["AssetTag"].ToString();
-                    UInt16 availability = Convert.ToUInt16(item["Availability"]);
-                    string caption = item["Caption"].ToString();
-                    UInt32 characteristics = Convert.ToUInt32(item["Characteristics"]);
-                    UInt32 configmanagererrorcode = Convert.ToUInt32(item["ConfigManagerErrorCode"]);
-                    Boolean configmanageruserconfig = item["ConfigManagerUserConfig"]==null?false: (Boolean)item["ConfigManagerUserConfig"];
-                    UInt16 cpustatus = Convert.ToUInt16(item["CpuStatus"]);
-                    string creationclassname = item["CreationClassName"].ToString();
-                    UInt32 currentclockspeed = Convert.ToUInt32(item["CurrentClockSpeed"]);
-                    UInt16 currentvoltage = Convert.ToUInt16(item["CurrentVoltage"]);
-                    UInt16 datawidth = Convert.ToUInt16(item["DataWidth"]);
-                    string description = item["Description"].ToString();
-                    string deviceid = item["DeviceID"].ToString();
-                    Boolean errorcleared = item["ErrorCleared"] == null ? false : (Boolean)item["ErrorCleared"];
-                    string errordescription = item["ErrorDescription"] == null ? null : item["ErrorDescription"].ToString();
-                    UInt32 extclock = Convert.ToUInt32(item["ExtClock"]);
-                    UInt16 family = Convert.ToUInt16(item["Family"]);
+                    WmiServerCpu cpu = new WmiServerCpu();
+                    cpu.Seq = seq;
+                    cpu.TicketNo = wmiServerMain.TicketNo;
+                    cpu.AddressWidth = Convert.ToUInt16(item["AddressWidth"]);
+                    cpu.Architecture = Convert.ToUInt16(item["Architecture"]);
+                    cpu.AssetTag = item["AssetTag"].ToString();
+                    cpu.Availability = Convert.ToUInt16(item["Availability"]);
+                    cpu.Caption = item["Caption"].ToString();
+                    cpu.Characteristics = Convert.ToInt32(item["Characteristics"]);
+                    cpu.ConfigManagerErrorCode = Convert.ToInt32(item["ConfigManagerErrorCode"]);
+                    cpu.ConfigManagerUserConfig = item["ConfigManagerUserConfig"] == null ? false : (Boolean)item["ConfigManagerUserConfig"];
+                    cpu.CpuStatus = Convert.ToUInt16(item["CpuStatus"]);
+                    cpu.CreationClassName = item["CreationClassName"].ToString();
+                    cpu.CurrentClockSpeed = Convert.ToInt32(item["CurrentClockSpeed"]);
+                    cpu.CurrentVoltage = Convert.ToUInt16(item["CurrentVoltage"]);
+                    cpu.DataWidth = Convert.ToUInt16(item["DataWidth"]);
+                    cpu.Description = item["Description"].ToString();
+                    cpu.DeviceID = item["DeviceID"].ToString();
+                    cpu.ErrorCleared = item["ErrorCleared"] == null ? false : (Boolean)item["ErrorCleared"];
+                    cpu.ErrorDescription = item["ErrorDescription"] == null ? null : item["ErrorDescription"].ToString();
+                    cpu.ExtClock = Convert.ToInt32(item["ExtClock"]);
+                    cpu.Family = Convert.ToInt16(item["Family"]);
                     //DateTime? installdate = item["InstallDate"] == null ? null : Convert.ToDateTime(item["InstallDate"]);
-                    UInt32 l2cachesize = Convert.ToUInt32(item["L2CacheSize"]);
-                    UInt32 l2cachespeed = Convert.ToUInt32(item["L2CacheSpeed"]);
-                    UInt32 l3cachesize = Convert.ToUInt32(item["L3CacheSize"]);
-                    UInt32 l3cachespeed = Convert.ToUInt32(item["L3CacheSpeed"]);
-                    UInt32 lasterrorcode = Convert.ToUInt32(item["LastErrorCode"]);
-                    UInt16 level = Convert.ToUInt16(item["Level"]);
-                    UInt16 loadpercentage = Convert.ToUInt16(item["LoadPercentage"]);
-                    string manufacturer = item["Manufacturer"] == null ? null : item["Manufacturer"].ToString();
-                    UInt32 maxclockspeed = Convert.ToUInt32(item["MaxClockSpeed"]);
-                    string name = item["Name"] == null ? null : item["Name"].ToString();
-                    UInt32 numberofcores = Convert.ToUInt32(item["NumberOfCores"]);
-                    UInt32 numberofenabledcore = Convert.ToUInt32(item["NumberOfEnabledCore"]);
-                    UInt32 numberoflogicalprocessors = Convert.ToUInt32(item["NumberOfLogicalProcessors"]);
-                    string otherfamilydescription = item["OtherFamilyDescription"] == null ? null : item["OtherFamilyDescription"].ToString();
-                    string partnumber = item["PartNumber"] == null ? null : item["PartNumber"].ToString();
-                    string pnpdeviceid = item["PNPDeviceID"] == null ? null : item["PNPDeviceID"].ToString();
+                    cpu.L2CacheSize = Convert.ToInt32(item["L2CacheSize"]);
+                    cpu.L2CacheSpeed = Convert.ToInt32(item["L2CacheSpeed"]);
+                    cpu.L3CacheSize = Convert.ToInt32(item["L3CacheSize"]);
+                    cpu.L3CacheSpeed = Convert.ToInt32(item["L3CacheSpeed"]);
+                    cpu.LastErrorCode = Convert.ToInt32(item["LastErrorCode"]);
+                    cpu.Level = Convert.ToInt16(item["Level"]);
+                    cpu.LoadPercentage = Convert.ToUInt16(item["LoadPercentage"]);
+                    cpu.Manufacturer = item["Manufacturer"] == null ? null : item["Manufacturer"].ToString();
+                    cpu.MaxClockSpeed = Convert.ToInt32(item["MaxClockSpeed"]);
+                    cpu.Name = item["Name"] == null ? null : item["Name"].ToString();
+                    cpu.NumberOfCores = Convert.ToInt32(item["NumberOfCores"]);
+                    cpu.NumberOfEnabledCore = Convert.ToInt32(item["NumberOfEnabledCore"]);
+                    cpu.NumberOfLogicalProcessors = Convert.ToInt32(item["NumberOfLogicalProcessors"]);
+                    cpu.OtherFamilyDescription = item["OtherFamilyDescription"] == null ? null : item["OtherFamilyDescription"].ToString();
+                    cpu.PartNumber = item["PartNumber"] == null ? null : item["PartNumber"].ToString();
+                    cpu.PNPDeviceID = item["PNPDeviceID"] == null ? null : item["PNPDeviceID"].ToString();
                     //UInt16 powermanagementcapabilities[] = Convert.ToUInt16(item["PowerManagementCapabilities[]"]);
-                    Boolean powermanagementsupported = item["PowerManagementSupported"] == null ? false : (Boolean)item["PowerManagementSupported"];
-                    string processorid = item["ProcessorId"] == null ? null : item["ProcessorId"].ToString();
-                    UInt16 processortype = Convert.ToUInt16(item["ProcessorType"]);
-                    UInt16 revision = Convert.ToUInt16(item["Revision"]);
-                    string role = item["Role"] == null ? null : item["Role"].ToString();
-                    Boolean secondleveladdresstranslationextensions = item["SecondLevelAddressTranslationExtensions"] == null ? false : (Boolean)item["SecondLevelAddressTranslationExtensions"];
-                    string serialnumber = item["SerialNumber"] == null ? null : item["SerialNumber"].ToString();
-                    string socketdesignation = item["SocketDesignation"] == null ? null : item["SocketDesignation"].ToString();
-                    string status = item["Status"] == null ? null : item["Status"].ToString();
-                    UInt16 statusinfo = Convert.ToUInt16(item["StatusInfo"]);
-                    string stepping = item["Stepping"] == null ? null : item["Stepping"].ToString();
-                    string systemcreationclassname = item["SystemCreationClassName"] == null ? null : item["SystemCreationClassName"].ToString();
-                    string systemname = item["SystemName"] == null ? null : item["SystemName"].ToString();
-                    UInt32 threadcount = Convert.ToUInt32(item["ThreadCount"]);
-                    string uniqueid = item["UniqueId"] == null ? null : item["UniqueId"].ToString();
-                    UInt16 upgrademethod = Convert.ToUInt16(item["UpgradeMethod"]);
-                    string version = item["Version"] == null ? null : item["Version"].ToString();
-                    Boolean virtualizationfirmwareenabled = item["VirtualizationFirmwareEnabled"] == null ? false : (Boolean)item["VirtualizationFirmwareEnabled"];
-                    Boolean vmmonitormodeextensions = item["VMMonitorModeExtensions"] == null ? false : (Boolean)item["VMMonitorModeExtensions"];
-                    UInt32 voltagecaps = Convert.ToUInt32(item["VoltageCaps"]);
-
+                    cpu.PowerManagementSupported = item["PowerManagementSupported"] == null ? false : (Boolean)item["PowerManagementSupported"];
+                    cpu.ProcessorId = item["ProcessorId"] == null ? null : item["ProcessorId"].ToString();
+                    cpu.ProcessorType = Convert.ToUInt16(item["ProcessorType"]);
+                    cpu.Revision = Convert.ToUInt16(item["Revision"]);
+                    cpu.Role = item["Role"] == null ? null : item["Role"].ToString();
+                    cpu.SecondLevelAddressTranslationExtensions = item["SecondLevelAddressTranslationExtensions"] == null ? false : (Boolean)item["SecondLevelAddressTranslationExtensions"];
+                    cpu.SerialNumber = item["SerialNumber"] == null ? null : item["SerialNumber"].ToString();
+                    cpu.SocketDesignation = item["SocketDesignation"] == null ? null : item["SocketDesignation"].ToString();
+                    cpu.Status = item["Status"] == null ? null : item["Status"].ToString();
+                    cpu.StatusInfo = Convert.ToUInt16(item["StatusInfo"]);
+                    cpu.Stepping = item["Stepping"] == null ? null : item["Stepping"].ToString();
+                    cpu.SystemCreationClassName = item["SystemCreationClassName"] == null ? null : item["SystemCreationClassName"].ToString();
+                    cpu.SystemName = item["SystemName"] == null ? null : item["SystemName"].ToString();
+                    cpu.ThreadCount = Convert.ToInt32(item["ThreadCount"]);
+                    cpu.UniqueId = item["UniqueId"] == null ? null : item["UniqueId"].ToString();
+                    cpu.UpgradeMethod = Convert.ToUInt16(item["UpgradeMethod"]);
+                    cpu.Version = item["Version"] == null ? null : item["Version"].ToString();
+                    cpu.VirtualizationFirmwareEnabled = item["VirtualizationFirmwareEnabled"] == null ? false : (Boolean)item["VirtualizationFirmwareEnabled"];
+                    cpu.VMMonitorModeExtensions = item["VMMonitorModeExtensions"] == null ? false : (Boolean)item["VMMonitorModeExtensions"];
+                    cpu.VoltageCaps = Convert.ToInt32(item["VoltageCaps"]);
+                    cpus.Add(cpu);
+                    seq++;
                 }
-                return new RESTfulResult { StatusCode = 200, Succeeded = true, Data = strQueryCpu, Message = "" };
+                if (wmiRepository.InsertServiceInfo(wmiServerMain, cpus))
+                {
+                    return new RESTfulResult { StatusCode = 200, Succeeded = true, Data = wmi, Message = wmi.ServerIP + " 获取成功！" };
+                }
+                return new RESTfulResult { StatusCode = 404, Succeeded = false, Data = "", Message = "数据库插入异常！" };
             }
             catch (Exception ex)
             {
                 return new RESTfulResult { StatusCode = 404, Succeeded = false, Data = "", Message = ex.Message };
             }
-            
+
         }
         private ManagementObjectSearcher GetObjectSearcher(ObjectQuery query, ManagementScope scope)
         {
-           return new ManagementObjectSearcher(scope, query);
+            return new ManagementObjectSearcher(scope, query);
         }
 
         private void GetDisk()

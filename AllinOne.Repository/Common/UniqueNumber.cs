@@ -23,9 +23,7 @@ namespace AllinOne.Repository.Common
             return i;
         }
 
-
-
-        public long GetYourSerialNumber(string _project = "SO")
+        public long GetYourSerialNumber(string _project)
         {
             ParaCheck(_project);
             SqlParameter Project = new SqlParameter("@Project", _project);

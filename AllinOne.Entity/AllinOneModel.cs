@@ -13,8 +13,9 @@ namespace AllinOne.Entity
         }
 
         public virtual DbSet<SysSerialNumber> SysSerialNumber { get; set; }
+        public virtual DbSet<WmiServerCpu> WmiServerCpu { get; set; }
         public virtual DbSet<WmiServerList> WmiServerList { get; set; }
-
+        public virtual DbSet<WmiServerMain> WmiServerMain { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WmiServerList>()
@@ -22,6 +23,6 @@ namespace AllinOne.Entity
                 .IsFixedLength();
         }
 
-        public System.Data.Entity.DbSet<AllinOne.Entity.ViewModel.RESTfulResult> RESTfulResults { get; set; }
+        public DbSet<ViewModel.RESTfulResult> RESTfulResults { get; set; }
     }
 }

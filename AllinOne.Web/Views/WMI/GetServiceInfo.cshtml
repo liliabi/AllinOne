@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content="5;url=/WMI/list" />
+    <title>获取结果</title>
+    <script type="text/javascript">
+            var maxtime = Math.floor(60 * 0.06); //一个小时，按秒计算，自己调整!
+            function CountDown() {
+                if (maxtime >= 0) {
+                    msg = maxtime + "秒后跳转！";
+                    document.all["timer"].innerHTML = msg;
+                    --maxtime;
+                }
+            }
+            timer = setInterval("CountDown()", 1000);
+    </script>
+</head>
+<body>
+    <h1>@ViewBag.result</h1>
+    <div id="timer" style="color:red"></div>
+</body>
+</html>

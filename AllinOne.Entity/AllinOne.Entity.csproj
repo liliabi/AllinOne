@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllinOneModel.cs" />
+    <Compile Include="Models\WmiServerCpu.cs" />
+    <Compile Include="Models\WmiServerMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\SysSerialNumber.cs" />
     <Compile Include="Models\WmiServerList.cs" />

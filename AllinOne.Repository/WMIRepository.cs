@@ -1,9 +1,6 @@
 ﻿using AllinOne.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AllinOne.Repository
 {
@@ -17,7 +14,19 @@ namespace AllinOne.Repository
 
         public WmiServerList GetById(string sguid)
         {
-            return db.WmiServerList.Where(f=>f.SGUID == sguid).FirstOrDefault();
+            return db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+        }
+
+        public bool InsertServiceInfo(WmiServerMain wmiServerMain, List<WmiServerCpu> listCpus)
+        {
+            db.WmiServerMain.Add(wmiServerMain);
+            foreach (var cpu in listCpus)
+            {
+                db.WmiServerCpu.Add(cpu);
+            }
+            int i = db.SaveChanges();
+
+            return i > 0 ? true : false;
         }
     }
 }

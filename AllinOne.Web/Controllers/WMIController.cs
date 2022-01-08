@@ -12,6 +12,7 @@ using AllinOne.Entity.ViewModel;
 
 namespace AllinOne.Web.Controllers
 {
+    [CustomHandleErrorAttribute]
     public class WMIController : Controller
     {
         private AllinOneModel db = new AllinOneModel();
@@ -19,17 +20,7 @@ namespace AllinOne.Web.Controllers
         // GET: WMI
         public ActionResult Index()
         {
-            try
-            {
-                //RESTfulResult res = WMIManager.TryPing("127.0.0.1");
-                return View();
-            }
-            catch (Exception)
-            {
-                return View();
-            }
-
-
+            return View();
         }
 
         public ActionResult Ping(string ServerIP)
@@ -40,17 +31,17 @@ namespace AllinOne.Web.Controllers
                 if (res.Succeeded)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append(string.Format("答复主机地址:{0};", ((PingReply)res.Data).Address.ToString()));
-                    sb.Append(string.Format("往返时间:{0};", ((PingReply)res.Data).RoundtripTime.ToString()));
-                    sb.Append(string.Format("生存时间(TTL):{0};", ((PingReply)res.Data).Options.Ttl.ToString()));
-                    sb.Append(string.Format("是否控制数据包分段:{0};", ((PingReply)res.Data).Options.DontFragment.ToString()));
-                    sb.Append(string.Format("缓冲区大小:{0};", ((PingReply)res.Data).Buffer.Length));
-                    ViewBag.result = ServerIP + "已Ping通!";
+                    sb.Append(string.Format("答复主机地址:{0};    ", ((PingReply)res.Data).Address.ToString()));
+                    sb.Append(string.Format("往返时间:{0};  ", ((PingReply)res.Data).RoundtripTime.ToString()));
+                    sb.Append(string.Format("生存时间(TTL):{0}; ", ((PingReply)res.Data).Options.Ttl.ToString()));
+                    sb.Append(string.Format("是否控制数据包分段:{0}; ", ((PingReply)res.Data).Options.DontFragment.ToString()));
+                    sb.Append(string.Format("缓冲区大小:{0}; ", ((PingReply)res.Data).Buffer.Length));
+                    ViewBag.result = ServerIP + " 已Ping通!";
                     ViewBag.message = sb;
                 }
                 else
                 {
-                    ViewBag.result = ServerIP + "无法Ping通!";
+                    ViewBag.result = ServerIP + " 无法Ping通!";
                     ViewBag.message = "请重试！";
                 }
                 return View(res);
@@ -61,11 +52,13 @@ namespace AllinOne.Web.Controllers
             }
 
         }
+
         public ActionResult GetServiceInfo(string sguid)
         {
-            wmiManager.GetServiceInfo(sguid);
-            ViewBag.result = "已获取!";
-            return RedirectToAction("Details");
+            var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+            RESTfulResult Result = wmiManager.GetServiceInfo(sguid);
+            ViewBag.result = Result.Message;
+            return View();
         }
 
 
@@ -73,18 +66,8 @@ namespace AllinOne.Web.Controllers
         [CustomHandleErrorAttribute]
         public ActionResult List()
         {
-            try
-            {
-                var wmi = wmiManager.GetAll();
-                return View(wmi);
-            }
-            catch (Exception)
-            {
-                throw;
-                //return View();
-            }
-
-
+            var wmi = wmiManager.GetAll();
+            return View(wmi);
         }
         // GET: WMI/Details/5
         public ActionResult Details(string sguid)
