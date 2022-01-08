@@ -25,37 +25,28 @@ namespace AllinOne.Web.Controllers
 
         public ActionResult Ping(string ServerIP)
         {
-            try
+            RESTfulResult res = WMIManager.TryPing(ServerIP);
+            if (res.Succeeded)
             {
-                RESTfulResult res = WMIManager.TryPing(ServerIP);
-                if (res.Succeeded)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append(string.Format("答复主机地址:{0};    ", ((PingReply)res.Data).Address.ToString()));
-                    sb.Append(string.Format("往返时间:{0};  ", ((PingReply)res.Data).RoundtripTime.ToString()));
-                    sb.Append(string.Format("生存时间(TTL):{0}; ", ((PingReply)res.Data).Options.Ttl.ToString()));
-                    sb.Append(string.Format("是否控制数据包分段:{0}; ", ((PingReply)res.Data).Options.DontFragment.ToString()));
-                    sb.Append(string.Format("缓冲区大小:{0}; ", ((PingReply)res.Data).Buffer.Length));
-                    ViewBag.result = ServerIP + " 已Ping通!";
-                    ViewBag.message = sb;
-                }
-                else
-                {
-                    ViewBag.result = ServerIP + " 无法Ping通!";
-                    ViewBag.message = "请重试！";
-                }
-                return View(res);
+                StringBuilder sb = new StringBuilder();
+                sb.Append(string.Format("答复主机地址:{0};    ", ((PingReply)res.Data).Address.ToString()));
+                sb.Append(string.Format("往返时间:{0};  ", ((PingReply)res.Data).RoundtripTime.ToString()));
+                sb.Append(string.Format("生存时间(TTL):{0}; ", ((PingReply)res.Data).Options.Ttl.ToString()));
+                sb.Append(string.Format("是否控制数据包分段:{0}; ", ((PingReply)res.Data).Options.DontFragment.ToString()));
+                sb.Append(string.Format("缓冲区大小:{0}; ", ((PingReply)res.Data).Buffer.Length));
+                ViewBag.result = ServerIP + " 已Ping通!";
+                ViewBag.message = sb;
             }
-            catch (Exception)
+            else
             {
-                return View();
+                ViewBag.result = ServerIP + " 无法Ping通!";
+                ViewBag.message = "请重试！";
             }
-
+            return View(res);
         }
 
         public ActionResult GetServiceInfo(string sguid)
         {
-            var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
             RESTfulResult Result = wmiManager.GetServiceInfo(sguid);
             ViewBag.result = Result.Message;
             return View();
@@ -88,26 +79,18 @@ namespace AllinOne.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ServerName,ServerIP,ServerDesc,UserId,UserPwd,ServerType,Creator")] WmiServerList wmiServerList)
         {
-
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    wmiServerList.SGUID = Guid.NewGuid().ToString();
-                    wmiServerList.CreateTime = DateTime.Now;
+                wmiServerList.SGUID = Guid.NewGuid().ToString();
+                wmiServerList.CreateTime = DateTime.Now;
 
-                    db.WmiServerList.Add(wmiServerList);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                // TODO: Add insert logic here
+                db.WmiServerList.Add(wmiServerList);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            // TODO: Add insert logic here
 
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: WMI/Edit/5
@@ -128,30 +111,23 @@ namespace AllinOne.Web.Controllers
         [HttpPost]
         public ActionResult Edit(string sguid, WmiServerList wmiServerList)
         {
-            try
+            // TODO: Add update logic here
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-                if (ModelState.IsValid)
+                var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+                if (wmi != null)
                 {
-                    var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
-                    if (wmi != null)
-                    {
-                        wmi.ServerIP = wmiServerList.ServerIP;
-                        wmi.ServerDesc = wmiServerList.ServerDesc;
-                        wmi.ServerType = wmiServerList.ServerType;
-                        wmi.Updator = wmiServerList.Updator;
-                        wmi.UpdateTime = DateTime.Now;
-                        wmi.UserId = wmiServerList.UserId;
-                        wmi.UserPwd = wmiServerList.UserPwd;
-                        db.SaveChanges();
-                    }
+                    wmi.ServerIP = wmiServerList.ServerIP;
+                    wmi.ServerDesc = wmiServerList.ServerDesc;
+                    wmi.ServerType = wmiServerList.ServerType;
+                    wmi.Updator = wmiServerList.Updator;
+                    wmi.UpdateTime = DateTime.Now;
+                    wmi.UserId = wmiServerList.UserId;
+                    wmi.UserPwd = wmiServerList.UserPwd;
+                    db.SaveChanges();
                 }
-                return RedirectToAction("List");
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("List");
         }
 
         // GET: WMI/Delete/5
@@ -165,22 +141,15 @@ namespace AllinOne.Web.Controllers
         [HttpPost]
         public ActionResult Delete(string sguid, WmiServerList wmiServerList)
         {
-            try
+            // TODO: Add delete logic here
+            var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
+            if (wmi != null)
             {
-                // TODO: Add delete logic here
-                var wmi = db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
-                if (wmi != null)
-                {
-                    db.WmiServerList.Remove(wmi);
-                    db.SaveChanges();
-                }
-                return RedirectToAction("Index");
+                db.WmiServerList.Remove(wmi);
+                db.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
-        #endregion
     }
+    #endregion
 }

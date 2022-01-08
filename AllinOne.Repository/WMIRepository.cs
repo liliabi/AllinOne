@@ -17,12 +17,20 @@ namespace AllinOne.Repository
             return db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
         }
 
-        public bool InsertServiceInfo(WmiServerMain wmiServerMain, List<WmiServerCpu> listCpus)
+        public bool InsertServiceInfo(WmiServerMain wmiServerMain, List<WmiServerCpu> listCpus, List<WmiServerMemory> listMems, List<WmiServerDisk> listDisks)
         {
             db.WmiServerMain.Add(wmiServerMain);
             foreach (var cpu in listCpus)
             {
                 db.WmiServerCpu.Add(cpu);
+            }
+            foreach (var mem in listMems)
+            {
+                db.WmiServerMemory.Add(mem);
+            }
+            foreach (var disk in listDisks)
+            {
+                db.WmiServerDisk.Add(disk);
             }
             int i = db.SaveChanges();
 

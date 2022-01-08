@@ -73,112 +73,235 @@ namespace AllinOne.Business
             string path = string.Format("\\\\{0}\\root\\cimv2", wmi.ServerIP);
             ManagementScope scope = new ManagementScope(path, conn);
             scope.Connect();
-            string strQueryCpu = "select * from Win32_Processor";
-            objectQuery = new ObjectQuery(strQueryCpu);
-            try
-            {   
-                WmiServerMain wmiServerMain = new WmiServerMain();
-                wmiServerMain.TicketNo = AllinOne.Business.Common.GetOrderNumber.GetWMINumber("WMITicket");
-                wmiServerMain.SGUID = sguid;
-                wmiServerMain.ServerName = wmi.ServerName;
-                wmiServerMain.ServerIP = wmi.ServerIP;
-                wmiServerMain.ServerDesc = wmi.ServerDesc;
-                wmiServerMain.UserId = wmi.UserId;
-                wmiServerMain.CreateDate = DateTime.Now;
-                wmiServerMain.Creator = "Unknow";
 
-                ManagementObjectSearcher searcherCpu = GetObjectSearcher(objectQuery, scope);
-                List<WmiServerCpu> cpus = new List<WmiServerCpu>();
-                int seq = 1;
-                foreach (ManagementObject item in searcherCpu.Get())
-                {
-                    WmiServerCpu cpu = new WmiServerCpu();
-                    cpu.Seq = seq;
-                    cpu.TicketNo = wmiServerMain.TicketNo;
-                    cpu.AddressWidth = Convert.ToUInt16(item["AddressWidth"]);
-                    cpu.Architecture = Convert.ToUInt16(item["Architecture"]);
-                    cpu.AssetTag = item["AssetTag"].ToString();
-                    cpu.Availability = Convert.ToUInt16(item["Availability"]);
-                    cpu.Caption = item["Caption"].ToString();
-                    cpu.Characteristics = Convert.ToInt32(item["Characteristics"]);
-                    cpu.ConfigManagerErrorCode = Convert.ToInt32(item["ConfigManagerErrorCode"]);
-                    cpu.ConfigManagerUserConfig = item["ConfigManagerUserConfig"] == null ? false : (Boolean)item["ConfigManagerUserConfig"];
-                    cpu.CpuStatus = Convert.ToUInt16(item["CpuStatus"]);
-                    cpu.CreationClassName = item["CreationClassName"].ToString();
-                    cpu.CurrentClockSpeed = Convert.ToInt32(item["CurrentClockSpeed"]);
-                    cpu.CurrentVoltage = Convert.ToUInt16(item["CurrentVoltage"]);
-                    cpu.DataWidth = Convert.ToUInt16(item["DataWidth"]);
-                    cpu.Description = item["Description"].ToString();
-                    cpu.DeviceID = item["DeviceID"].ToString();
-                    cpu.ErrorCleared = item["ErrorCleared"] == null ? false : (Boolean)item["ErrorCleared"];
-                    cpu.ErrorDescription = item["ErrorDescription"] == null ? null : item["ErrorDescription"].ToString();
-                    cpu.ExtClock = Convert.ToInt32(item["ExtClock"]);
-                    cpu.Family = Convert.ToInt16(item["Family"]);
-                    //DateTime? installdate = item["InstallDate"] == null ? null : Convert.ToDateTime(item["InstallDate"]);
-                    cpu.L2CacheSize = Convert.ToInt32(item["L2CacheSize"]);
-                    cpu.L2CacheSpeed = Convert.ToInt32(item["L2CacheSpeed"]);
-                    cpu.L3CacheSize = Convert.ToInt32(item["L3CacheSize"]);
-                    cpu.L3CacheSpeed = Convert.ToInt32(item["L3CacheSpeed"]);
-                    cpu.LastErrorCode = Convert.ToInt32(item["LastErrorCode"]);
-                    cpu.Level = Convert.ToInt16(item["Level"]);
-                    cpu.LoadPercentage = Convert.ToUInt16(item["LoadPercentage"]);
-                    cpu.Manufacturer = item["Manufacturer"] == null ? null : item["Manufacturer"].ToString();
-                    cpu.MaxClockSpeed = Convert.ToInt32(item["MaxClockSpeed"]);
-                    cpu.Name = item["Name"] == null ? null : item["Name"].ToString();
-                    cpu.NumberOfCores = Convert.ToInt32(item["NumberOfCores"]);
-                    cpu.NumberOfEnabledCore = Convert.ToInt32(item["NumberOfEnabledCore"]);
-                    cpu.NumberOfLogicalProcessors = Convert.ToInt32(item["NumberOfLogicalProcessors"]);
-                    cpu.OtherFamilyDescription = item["OtherFamilyDescription"] == null ? null : item["OtherFamilyDescription"].ToString();
-                    cpu.PartNumber = item["PartNumber"] == null ? null : item["PartNumber"].ToString();
-                    cpu.PNPDeviceID = item["PNPDeviceID"] == null ? null : item["PNPDeviceID"].ToString();
-                    //UInt16 powermanagementcapabilities[] = Convert.ToUInt16(item["PowerManagementCapabilities[]"]);
-                    cpu.PowerManagementSupported = item["PowerManagementSupported"] == null ? false : (Boolean)item["PowerManagementSupported"];
-                    cpu.ProcessorId = item["ProcessorId"] == null ? null : item["ProcessorId"].ToString();
-                    cpu.ProcessorType = Convert.ToUInt16(item["ProcessorType"]);
-                    cpu.Revision = Convert.ToUInt16(item["Revision"]);
-                    cpu.Role = item["Role"] == null ? null : item["Role"].ToString();
-                    cpu.SecondLevelAddressTranslationExtensions = item["SecondLevelAddressTranslationExtensions"] == null ? false : (Boolean)item["SecondLevelAddressTranslationExtensions"];
-                    cpu.SerialNumber = item["SerialNumber"] == null ? null : item["SerialNumber"].ToString();
-                    cpu.SocketDesignation = item["SocketDesignation"] == null ? null : item["SocketDesignation"].ToString();
-                    cpu.Status = item["Status"] == null ? null : item["Status"].ToString();
-                    cpu.StatusInfo = Convert.ToUInt16(item["StatusInfo"]);
-                    cpu.Stepping = item["Stepping"] == null ? null : item["Stepping"].ToString();
-                    cpu.SystemCreationClassName = item["SystemCreationClassName"] == null ? null : item["SystemCreationClassName"].ToString();
-                    cpu.SystemName = item["SystemName"] == null ? null : item["SystemName"].ToString();
-                    cpu.ThreadCount = Convert.ToInt32(item["ThreadCount"]);
-                    cpu.UniqueId = item["UniqueId"] == null ? null : item["UniqueId"].ToString();
-                    cpu.UpgradeMethod = Convert.ToUInt16(item["UpgradeMethod"]);
-                    cpu.Version = item["Version"] == null ? null : item["Version"].ToString();
-                    cpu.VirtualizationFirmwareEnabled = item["VirtualizationFirmwareEnabled"] == null ? false : (Boolean)item["VirtualizationFirmwareEnabled"];
-                    cpu.VMMonitorModeExtensions = item["VMMonitorModeExtensions"] == null ? false : (Boolean)item["VMMonitorModeExtensions"];
-                    cpu.VoltageCaps = Convert.ToInt32(item["VoltageCaps"]);
-                    cpus.Add(cpu);
-                    seq++;
-                }
-                if (wmiRepository.InsertServiceInfo(wmiServerMain, cpus))
-                {
-                    return new RESTfulResult { StatusCode = 200, Succeeded = true, Data = wmi, Message = wmi.ServerIP + " 获取成功！" };
-                }
-                return new RESTfulResult { StatusCode = 404, Succeeded = false, Data = "", Message = "数据库插入异常！" };
-            }
-            catch (Exception ex)
+            WmiServerMain wmiServerMain = GetMain(sguid, wmi);
+
+            Dictionary<string, string> queryDic = new Dictionary<string, string>();
+            queryDic.Add("CPU", "select * from Win32_Processor");
+            queryDic.Add("MEM", "select * from Win32_PhysicalMemory");
+            queryDic.Add("DISK", "select * from Win32_DiskDrive");
+            objectQuery = new ObjectQuery(queryDic["CPU"]);
+            List<WmiServerCpu> cpus = GetCpus(scope, wmiServerMain.TicketNo);
+
+            objectQuery = new ObjectQuery(queryDic["MEM"]);
+            List<WmiServerMemory> Mems = GetMems(scope, wmiServerMain.TicketNo);
+
+            objectQuery = new ObjectQuery(queryDic["DISK"]);
+            List<WmiServerDisk> Disks = GetDisks(scope, wmiServerMain.TicketNo);
+
+            if (wmiRepository.InsertServiceInfo(wmiServerMain, cpus, Mems, Disks))
             {
-                return new RESTfulResult { StatusCode = 404, Succeeded = false, Data = "", Message = ex.Message };
+                return new RESTfulResult { StatusCode = 200, Succeeded = true, Data = wmi, Message = wmi.ServerIP + " 获取成功！" };
+            }
+            return new RESTfulResult { StatusCode = 404, Succeeded = false, Data = "", Message = "数据库插入异常！" };
+        }
+
+       
+
+        private WmiServerMain GetMain(string sguid, WmiServerList wmi)
+        {
+            WmiServerMain wmiServerMain = new WmiServerMain();
+            wmiServerMain.TicketNo = AllinOne.Business.Common.GetOrderNumber.GetWMINumber("WMITicket");
+            wmiServerMain.SGUID = sguid;
+            wmiServerMain.ServerName = wmi.ServerName;
+            wmiServerMain.ServerIP = wmi.ServerIP;
+            wmiServerMain.ServerDesc = wmi.ServerDesc;
+            wmiServerMain.UserId = wmi.UserId;
+            wmiServerMain.CreateDate = DateTime.Now;
+            wmiServerMain.Creator = "Unknow";
+            return wmiServerMain;
+        }
+
+        private List<WmiServerCpu> GetCpus(ManagementScope scope, string TicketNo)
+        {
+            ManagementObjectSearcher searcher = GetObjectSearcher(objectQuery, scope);
+            List<WmiServerCpu> cpus = new List<WmiServerCpu>();
+            int seq = 1;
+            foreach (ManagementObject item in searcher.Get())
+            {
+                WmiServerCpu cpu = new WmiServerCpu();
+                cpu.Seq = seq;
+                cpu.TicketNo = TicketNo;
+                cpu.AddressWidth = Convert.ToInt32(item["AddressWidth"]);
+                cpu.Architecture = Convert.ToInt32(item["Architecture"]);
+                cpu.AssetTag = item["AssetTag"].ToString();
+                cpu.Availability = Convert.ToInt32(item["Availability"]);
+                cpu.Caption = item["Caption"].ToString();
+                cpu.Characteristics = Convert.ToInt32(item["Characteristics"]);
+                cpu.ConfigManagerErrorCode = Convert.ToInt32(item["ConfigManagerErrorCode"]);
+                cpu.ConfigManagerUserConfig = item["ConfigManagerUserConfig"] == null ? false : (Boolean)item["ConfigManagerUserConfig"];
+                cpu.CpuStatus = Convert.ToInt32(item["CpuStatus"]);
+                cpu.CreationClassName = item["CreationClassName"].ToString();
+                cpu.CurrentClockSpeed = Convert.ToInt32(item["CurrentClockSpeed"]);
+                cpu.CurrentVoltage = Convert.ToInt32(item["CurrentVoltage"]);
+                cpu.DataWidth = Convert.ToInt32(item["DataWidth"]);
+                cpu.Description = item["Description"].ToString();
+                cpu.DeviceID = item["DeviceID"].ToString();
+                cpu.ErrorCleared = item["ErrorCleared"] == null ? false : (Boolean)item["ErrorCleared"];
+                cpu.ErrorDescription = item["ErrorDescription"] == null ? null : item["ErrorDescription"].ToString();
+                cpu.ExtClock = Convert.ToInt32(item["ExtClock"]);
+                cpu.Family = Convert.ToInt16(item["Family"]);
+                //DateTime? installdate = item["InstallDate"] == null ? null : Convert.ToDateTime(item["InstallDate"]);
+                cpu.L2CacheSize = Convert.ToInt32(item["L2CacheSize"]);
+                cpu.L2CacheSpeed = Convert.ToInt32(item["L2CacheSpeed"]);
+                cpu.L3CacheSize = Convert.ToInt32(item["L3CacheSize"]);
+                cpu.L3CacheSpeed = Convert.ToInt32(item["L3CacheSpeed"]);
+                cpu.LastErrorCode = Convert.ToInt32(item["LastErrorCode"]);
+                cpu.Level = Convert.ToInt16(item["Level"]);
+                cpu.LoadPercentage = Convert.ToInt32(item["LoadPercentage"]);
+                cpu.Manufacturer = item["Manufacturer"] == null ? null : item["Manufacturer"].ToString();
+                cpu.MaxClockSpeed = Convert.ToInt32(item["MaxClockSpeed"]);
+                cpu.Name = item["Name"] == null ? null : item["Name"].ToString();
+                cpu.NumberOfCores = Convert.ToInt32(item["NumberOfCores"]);
+                cpu.NumberOfEnabledCore = Convert.ToInt32(item["NumberOfEnabledCore"]);
+                cpu.NumberOfLogicalProcessors = Convert.ToInt32(item["NumberOfLogicalProcessors"]);
+                cpu.OtherFamilyDescription = item["OtherFamilyDescription"] == null ? null : item["OtherFamilyDescription"].ToString();
+                cpu.PartNumber = item["PartNumber"] == null ? null : item["PartNumber"].ToString();
+                cpu.PNPDeviceID = item["PNPDeviceID"] == null ? null : item["PNPDeviceID"].ToString();
+                //UInt16 powermanagementcapabilities[] = Convert.ToInt32(item["PowerManagementCapabilities[]"]);
+                cpu.PowerManagementSupported = item["PowerManagementSupported"] == null ? false : (Boolean)item["PowerManagementSupported"];
+                cpu.ProcessorId = item["ProcessorId"] == null ? null : item["ProcessorId"].ToString();
+                cpu.ProcessorType = Convert.ToInt32(item["ProcessorType"]);
+                cpu.Revision = Convert.ToInt32(item["Revision"]);
+                cpu.Role = item["Role"] == null ? null : item["Role"].ToString();
+                cpu.SecondLevelAddressTranslationExtensions = item["SecondLevelAddressTranslationExtensions"] == null ? false : (Boolean)item["SecondLevelAddressTranslationExtensions"];
+                cpu.SerialNumber = item["SerialNumber"] == null ? null : item["SerialNumber"].ToString();
+                cpu.SocketDesignation = item["SocketDesignation"] == null ? null : item["SocketDesignation"].ToString();
+                cpu.Status = item["Status"] == null ? null : item["Status"].ToString();
+                cpu.StatusInfo = Convert.ToInt32(item["StatusInfo"]);
+                cpu.Stepping = item["Stepping"] == null ? null : item["Stepping"].ToString();
+                cpu.SystemCreationClassName = item["SystemCreationClassName"] == null ? null : item["SystemCreationClassName"].ToString();
+                cpu.SystemName = item["SystemName"] == null ? null : item["SystemName"].ToString();
+                cpu.ThreadCount = Convert.ToInt32(item["ThreadCount"]);
+                cpu.UniqueId = item["UniqueId"] == null ? null : item["UniqueId"].ToString();
+                cpu.UpgradeMethod = Convert.ToInt32(item["UpgradeMethod"]);
+                cpu.Version = item["Version"] == null ? null : item["Version"].ToString();
+                cpu.VirtualizationFirmwareEnabled = item["VirtualizationFirmwareEnabled"] == null ? false : (Boolean)item["VirtualizationFirmwareEnabled"];
+                cpu.VMMonitorModeExtensions = item["VMMonitorModeExtensions"] == null ? false : (Boolean)item["VMMonitorModeExtensions"];
+                cpu.VoltageCaps = Convert.ToInt32(item["VoltageCaps"]);
+                cpus.Add(cpu);
+                seq++;
             }
 
+            return cpus;
+        }
+
+        private List<WmiServerMemory> GetMems(ManagementScope scope, string TicketNo)
+        {
+            ManagementObjectSearcher searcher = GetObjectSearcher(objectQuery, scope);
+            List<WmiServerMemory> mems = new List<WmiServerMemory>();
+            int seq = 1;
+            foreach (ManagementObject item in searcher.Get())
+            {
+                WmiServerMemory mem = new WmiServerMemory();
+                mem.Seq = seq;
+                mem.TicketNo = TicketNo;
+                mem.MemAttribute = Convert.ToInt32(item["Attributes"]);
+                mem.Capacity = Convert.ToInt64(item["Capacity"]);
+                mem.Caption = Convert.ToString(item["Caption"]);
+                mem.ConfiguredClockSpeed = Convert.ToInt32(item["ConfiguredClockSpeed"]);
+                mem.ConfiguredVoltage = Convert.ToInt32(item["ConfiguredVoltage"]);
+                mem.CreationClassName = Convert.ToString(item["CreationClassName"]);
+                mem.DataWidth = Convert.ToInt32(item["DataWidth"]);
+                mem.Description = Convert.ToString(item["Description"]);
+                mem.DeviceLocator = Convert.ToString(item["DeviceLocator"]);
+                mem.FormFactor = Convert.ToInt32(item["FormFactor"]);
+                mem.HotSwappable = item["HotSwappable"] == null ? false : (Boolean)item["HotSwappable"];
+                mem.InterleaveDataDepth = Convert.ToInt32(item["InterleaveDataDepth"]);
+                mem.InterleavePosition = Convert.ToInt32(item["InterleavePosition"]);
+                mem.Manufacturer = Convert.ToString(item["Manufacturer"]);
+                mem.MaxVoltage = Convert.ToInt32(item["MaxVoltage"]);
+                mem.MemoryType = Convert.ToInt32(item["MemoryType"]);
+                mem.MinVoltage = Convert.ToInt32(item["MinVoltage"]);
+                mem.Model = Convert.ToString(item["Model"]);
+                mem.OtherIdentifyingInfo = Convert.ToString(item["OtherIdentifyingInfo"]);
+                mem.PartNumber = Convert.ToString(item["PartNumber"]);
+                mem.PositionInRow = Convert.ToInt32(item["PositionInRow"]);
+                mem.PoweredOn = item["PoweredOn"] == null ? false : (Boolean)item["PoweredOn"];
+                mem.Removable = item["Removable"] == null ? false : (Boolean)item["Removable"];
+                mem.Replaceable = item["Replaceable"] == null ? false : (Boolean)item["Replaceable"];
+                mem.SerialNumber = Convert.ToString(item["SerialNumber"]);
+                mem.SKU = Convert.ToString(item["SKU"]);
+                mem.SMBIOSMemoryType = Convert.ToInt32(item["SMBIOSMemoryType"]);
+                mem.Speed = Convert.ToInt32(item["Speed"]);
+                mem.Status = Convert.ToString(item["Status"]);
+                mem.Tag = Convert.ToString(item["Tag"]);
+                mem.TotalWidth = Convert.ToInt32(item["TotalWidth"]);
+                mem.TypeDetail = Convert.ToInt32(item["TypeDetail"]);
+                mem.Version = Convert.ToString(item["Version"]);
+                mems.Add(mem);
+                seq++;
+            }
+
+            return mems;
+        }
+
+        private List<WmiServerDisk> GetDisks(ManagementScope scope, string TicketNo)
+        {
+            ManagementObjectSearcher searcher = GetObjectSearcher(objectQuery, scope);
+            List<WmiServerDisk> disks = new List<WmiServerDisk>();
+            int seq = 1;
+            foreach (ManagementObject item in searcher.Get())
+            {
+                WmiServerDisk disk = new WmiServerDisk();
+                disk.Seq = seq;
+                disk.TicketNo = TicketNo;
+                disk.Availability = Convert.ToInt32(item["Availability"]);
+                disk.BytesPerSector = Convert.ToInt32(item["BytesPerSector"]);
+                disk.Caption = Convert.ToString(item["Caption"]);
+                disk.CompressionMethod = Convert.ToString(item["CompressionMethod"]);
+                disk.ConfigManagerErrorCode = Convert.ToInt32(item["ConfigManagerErrorCode"]);
+                disk.ConfigManagerUserConfig = item["ConfigManagerUserConfig"] == null ? false : (Boolean)item["ConfigManagerUserConfig"];
+                disk.CreationClassName = Convert.ToString(item["CreationClassName"]);
+                disk.DefaultBlockSize = Convert.ToInt64(item["DefaultBlockSize"]);
+                disk.Description = Convert.ToString(item["Description"]);
+                disk.DeviceID = Convert.ToString(item["DeviceID"]);
+                disk.ErrorCleared = item["ErrorCleared"] == null ? false : (Boolean)item["ErrorCleared"];
+                disk.ErrorDescription = Convert.ToString(item["ErrorDescription"]);
+                disk.ErrorMethodology = Convert.ToString(item["ErrorMethodology"]);
+                disk.FirmwareRevision = Convert.ToString(item["FirmwareRevision"]);
+                disk.Index = Convert.ToInt32(item["Index"]);
+                disk.InterfaceType = Convert.ToString(item["InterfaceType"]);
+                disk.LastErrorCode = Convert.ToInt32(item["LastErrorCode"]);
+                disk.Manufacturer = Convert.ToString(item["Manufacturer"]);
+                disk.MaxBlockSize = Convert.ToInt64(item["MaxBlockSize"]);
+                disk.MaxMediaSize = Convert.ToInt64(item["MaxMediaSize"]);
+                disk.MediaLoaded = item["MediaLoaded"] == null ? false : (Boolean)item["MediaLoaded"];
+                disk.MediaType = Convert.ToString(item["MediaType"]);
+                disk.MinBlockSize = Convert.ToInt64(item["MinBlockSize"]);
+                disk.Model = Convert.ToString(item["Model"]);
+                disk.Name = Convert.ToString(item["Name"]);
+                disk.NeedsCleaning = item["NeedsCleaning"] == null ? false : (Boolean)item["NeedsCleaning"];
+                disk.NumberOfMediaSupported = Convert.ToInt32(item["NumberOfMediaSupported"]);
+                disk.Partitions = Convert.ToInt32(item["Partitions"]);
+                disk.PNPDeviceID = Convert.ToString(item["PNPDeviceID"]);
+                disk.PowerManagementSupported = item["PowerManagementSupported"] == null ? false : (Boolean)item["PowerManagementSupported"];
+                disk.SCSIBus = Convert.ToInt32(item["SCSIBus"]);
+                disk.SCSILogicalUnit = Convert.ToInt32(item["SCSILogicalUnit"]);
+                disk.SCSIPort = Convert.ToInt32(item["SCSIPort"]);
+                disk.SCSITargetId = Convert.ToInt32(item["SCSITargetId"]);
+                disk.SectorsPerTrack = Convert.ToInt32(item["SectorsPerTrack"]);
+                disk.SerialNumber = Convert.ToString(item["SerialNumber"]);
+                disk.Signature = Convert.ToInt32(item["Signature"]);
+                disk.Size = Convert.ToInt64(item["Size"]);
+                disk.Status = Convert.ToString(item["Status"]);
+                disk.StatusInfo = Convert.ToInt32(item["StatusInfo"]);
+                disk.SystemCreationClassName = Convert.ToString(item["SystemCreationClassName"]);
+                disk.SystemName = Convert.ToString(item["SystemName"]);
+                disk.TotalCylinders = Convert.ToInt64(item["TotalCylinders"]);
+                disk.TotalHeads = Convert.ToInt32(item["TotalHeads"]);
+                disk.TotalSectors = Convert.ToInt64(item["TotalSectors"]);
+                disk.TotalTracks = Convert.ToInt64(item["TotalTracks"]);
+                disk.TracksPerCylinder = Convert.ToInt32(item["TracksPerCylinder"]);
+                disks.Add(disk);
+                seq++;
+            }
+
+            return disks;
         }
         private ManagementObjectSearcher GetObjectSearcher(ObjectQuery query, ManagementScope scope)
         {
             return new ManagementObjectSearcher(scope, query);
-        }
-
-        private void GetDisk()
-        {
-
-        }
-        private void GetNetwork()
-        {
-
         }
         #endregion
     }
