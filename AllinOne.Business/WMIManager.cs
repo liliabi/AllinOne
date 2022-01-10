@@ -80,6 +80,7 @@ namespace AllinOne.Business
             queryDic.Add("CPU", "select * from Win32_Processor");
             queryDic.Add("MEM", "select * from Win32_PhysicalMemory");
             queryDic.Add("DISK", "select * from Win32_DiskDrive");
+            queryDic.Add("LOGICALDISK", "select * from Win32_LogicalDisk");
             objectQuery = new ObjectQuery(queryDic["CPU"]);
             List<WmiServerCpu> cpus = GetCpus(scope, wmiServerMain.TicketNo);
 
@@ -89,14 +90,16 @@ namespace AllinOne.Business
             objectQuery = new ObjectQuery(queryDic["DISK"]);
             List<WmiServerDisk> Disks = GetDisks(scope, wmiServerMain.TicketNo);
 
-            if (wmiRepository.InsertServiceInfo(wmiServerMain, cpus, Mems, Disks))
+            objectQuery = new ObjectQuery(queryDic["LOGICALDISK"]);
+            List<WmiServerLogicalDisk> LogicalDisks = GetLogicalDisks(scope, wmiServerMain.TicketNo);
+            if (wmiRepository.SaveServiceInfo(wmiServerMain, cpus, Mems, Disks, LogicalDisks))
             {
                 return new RESTfulResult { StatusCode = 200, Succeeded = true, Data = wmi, Message = wmi.ServerIP + " 获取成功！" };
             }
             return new RESTfulResult { StatusCode = 404, Succeeded = false, Data = "", Message = "数据库插入异常！" };
         }
 
-       
+        
 
         private WmiServerMain GetMain(string sguid, WmiServerList wmi)
         {
@@ -299,6 +302,62 @@ namespace AllinOne.Business
 
             return disks;
         }
+
+        private List<WmiServerLogicalDisk> GetLogicalDisks(ManagementScope scope, string TicketNo)
+        {
+            ManagementObjectSearcher searcher = GetObjectSearcher(objectQuery, scope);
+            List<WmiServerLogicalDisk> logicaldisks = new List<WmiServerLogicalDisk>();
+            int seq = 1;
+            foreach (ManagementObject item in searcher.Get())
+            {
+                WmiServerLogicalDisk logicaldisk = new WmiServerLogicalDisk();
+                logicaldisk.Seq = seq;
+                logicaldisk.TicketNo = TicketNo;
+                logicaldisk.Access = Convert.ToInt32(item["Access"]);
+                logicaldisk.Availability = Convert.ToInt32(item["Availability"]);
+                logicaldisk.BlockSize = Convert.ToInt64(item["BlockSize"]);
+                logicaldisk.Caption = Convert.ToString(item["Caption"]);
+                logicaldisk.Compressed = item["Compressed"] == null ? false : (Boolean)item["Compressed"];
+                logicaldisk.ConfigManagerErrorCode = Convert.ToInt32(item["ConfigManagerErrorCode"]);
+                logicaldisk.ConfigManagerUserConfig = item["ConfigManagerUserConfig"] == null ? false : (Boolean)item["ConfigManagerUserConfig"];
+                logicaldisk.CreationClassName = Convert.ToString(item["CreationClassName"]);
+                logicaldisk.Description = Convert.ToString(item["Description"]);
+                logicaldisk.DeviceID = Convert.ToString(item["DeviceID"]);
+                logicaldisk.DriveType = Convert.ToInt32(item["DriveType"]);
+                logicaldisk.ErrorCleared = item["ErrorCleared"] == null ? false : (Boolean)item["ErrorCleared"];
+                logicaldisk.ErrorDescription = Convert.ToString(item["ErrorDescription"]);
+                logicaldisk.ErrorMethodology = Convert.ToString(item["ErrorMethodology"]);
+                logicaldisk.FileSystem = Convert.ToString(item["FileSystem"]);
+                logicaldisk.FreeSpace = Convert.ToInt64(item["FreeSpace"]);
+                logicaldisk.LastErrorCode = Convert.ToInt32(item["LastErrorCode"]);
+                logicaldisk.MaximumComponentLength = Convert.ToInt32(item["MaximumComponentLength"]);
+                logicaldisk.MediaType = Convert.ToInt32(item["MediaType"]);
+                logicaldisk.Name = Convert.ToString(item["Name"]);
+                logicaldisk.NumberOfBlocks = Convert.ToInt32(item["NumberOfBlocks"]);
+                logicaldisk.PNPDeviceID = Convert.ToString(item["PNPDeviceID"]);
+                logicaldisk.PowerManagementSupported = item["PowerManagementSupported"] == null ? false : (Boolean)item["PowerManagementSupported"];
+                logicaldisk.ProviderName = Convert.ToString(item["ProviderName"]);
+                logicaldisk.Purpose = Convert.ToString(item["Purpose"]);
+                logicaldisk.QuotasDisabled = item["QuotasDisabled"] == null ? false : (Boolean)item["QuotasDisabled"];
+                logicaldisk.QuotasIncomplete = item["QuotasIncomplete"] == null ? false : (Boolean)item["QuotasIncomplete"];
+                logicaldisk.QuotasRebuilding= item["QuotasRebuilding"] == null ? false : (Boolean)item["QuotasRebuilding"];
+                logicaldisk.Size = Convert.ToInt64(item["Size"]);
+                logicaldisk.Status = Convert.ToString(item["Status"]);
+                logicaldisk.StatusInfo = Convert.ToInt32(item["StatusInfo"]);
+                logicaldisk.SupportsDiskQuotas = item["SupportsDiskQuotas"] == null ? false : (Boolean)item["SupportsDiskQuotas"];
+                logicaldisk.SupportsFileBasedCompression = item["SupportsFileBasedCompression"] == null ? false : (Boolean)item["SupportsFileBasedCompression"];
+                logicaldisk.SystemCreationClassName = Convert.ToString(item["SystemCreationClassName"]);
+                logicaldisk.SystemName = Convert.ToString(item["SystemName"]);
+                logicaldisk.VolumeDirty = item["VolumeDirty"] == null ? false : (Boolean)item["VolumeDirty"];
+                logicaldisk.VolumeName = Convert.ToString(item["VolumeName"]);
+                logicaldisk.VolumeSerialNumber = Convert.ToString(item["VolumeSerialNumber"]);
+                logicaldisks.Add(logicaldisk);
+                seq++;
+            }
+
+            return logicaldisks;
+        }
+
         private ManagementObjectSearcher GetObjectSearcher(ObjectQuery query, ManagementScope scope)
         {
             return new ManagementObjectSearcher(scope, query);

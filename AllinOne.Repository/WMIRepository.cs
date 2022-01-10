@@ -17,7 +17,7 @@ namespace AllinOne.Repository
             return db.WmiServerList.Where(f => f.SGUID == sguid).FirstOrDefault();
         }
 
-        public bool InsertServiceInfo(WmiServerMain wmiServerMain, List<WmiServerCpu> listCpus, List<WmiServerMemory> listMems, List<WmiServerDisk> listDisks)
+        public bool SaveServiceInfo(WmiServerMain wmiServerMain, List<WmiServerCpu> listCpus, List<WmiServerMemory> listMems, List<WmiServerDisk> listDisks, List<WmiServerLogicalDisk> Listlogicaldisks)
         {
             db.WmiServerMain.Add(wmiServerMain);
             foreach (var cpu in listCpus)
@@ -31,6 +31,11 @@ namespace AllinOne.Repository
             foreach (var disk in listDisks)
             {
                 db.WmiServerDisk.Add(disk);
+            }
+
+            foreach (var logicaldisks in Listlogicaldisks)
+            {
+                db.WmiServerLogicalDisk.Add(logicaldisks);
             }
             int i = db.SaveChanges();
 

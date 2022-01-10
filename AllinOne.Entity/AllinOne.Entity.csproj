@@ -53,6 +53,7 @@
     <Compile Include="AllinOneModel.cs" />
     <Compile Include="Models\WmiServerCpu.cs" />
     <Compile Include="Models\WmiServerDisk.cs" />
+    <Compile Include="Models\WmiServerLogicalDisk.cs" />
     <Compile Include="Models\WmiServerMain.cs" />
     <Compile Include="Models\WmiServerMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

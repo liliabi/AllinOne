@@ -18,6 +18,7 @@ namespace AllinOne.Entity
         public virtual DbSet<WmiServerMain> WmiServerMain { get; set; }
         public virtual DbSet<WmiServerMemory> WmiServerMemory { get; set; }
         public virtual DbSet<WmiServerDisk> WmiServerDisk { get; set; }
+        public virtual DbSet<WmiServerLogicalDisk> WmiServerLogicalDisk { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WmiServerList>()

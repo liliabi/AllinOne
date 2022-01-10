@@ -430,4 +430,434 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'该处理器的电压的能力' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerCpu', @level2type=N'COLUMN',@level2name=N'VoltageCaps'
 GO
 
+USE [AllinOne]
+GO
+
+/****** Object:  Table [dbo].[WmiServerMemory]    Script Date: 2022/01/10 09:48:58 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[WmiServerMemory](
+	[TicketNo] [nvarchar](50) NOT NULL,
+	[Seq] [int] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[MemAttribute] [int] NULL,
+	[Capacity] [bigint] NULL,
+	[Caption] [nvarchar](max) NULL,
+	[ConfiguredClockSpeed] [int] NULL,
+	[ConfiguredVoltage] [int] NULL,
+	[CreationClassName] [nvarchar](max) NULL,
+	[DataWidth] [int] NULL,
+	[Description] [nvarchar](max) NULL,
+	[DeviceLocator] [nvarchar](max) NULL,
+	[FormFactor] [int] NULL,
+	[HotSwappable] [bit] NULL,
+	[InterleaveDataDepth] [int] NULL,
+	[InterleavePosition] [int] NULL,
+	[Manufacturer] [nvarchar](max) NULL,
+	[MaxVoltage] [int] NULL,
+	[MemoryType] [int] NULL,
+	[MinVoltage] [int] NULL,
+	[Model] [nvarchar](max) NULL,
+	[OtherIdentifyingInfo] [nvarchar](max) NULL,
+	[PartNumber] [nvarchar](max) NULL,
+	[PositionInRow] [int] NULL,
+	[PoweredOn] [bit] NULL,
+	[Removable] [bit] NULL,
+	[Replaceable] [bit] NULL,
+	[SerialNumber] [nvarchar](max) NULL,
+	[SKU] [nvarchar](max) NULL,
+	[SMBIOSMemoryType] [int] NULL,
+	[Speed] [int] NULL,
+	[Status] [nvarchar](max) NULL,
+	[Tag] [nvarchar](max) NULL,
+	[TotalWidth] [int] NULL,
+	[TypeDetail] [int] NULL,
+	[Version] [nvarchar](max) NULL,
+ CONSTRAINT [PK_WmiServerMemory] PRIMARY KEY CLUSTERED 
+(
+	[TicketNo] ASC,
+	[Seq] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'名字' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Name'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'属性值' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'MemAttribute'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'获取内存容量（单位KB）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Capacity'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'物理内存还是虚拟内存' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Caption'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'配置时钟速度' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'ConfiguredClockSpeed'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'配置电压' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'ConfiguredVoltage'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'创建类名（就是更换这个类的名字）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'CreationClassName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'获取内存带宽' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'DataWidth'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述信息与Caption一样' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Description'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'获取设备定位器' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'DeviceLocator'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'构成因素' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'FormFactor'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否支持热插拔' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'HotSwappable'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'数据交错深度' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'InterleaveDataDepth'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'交错的位置' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'InterleavePosition'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'生产商' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Manufacturer'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'最大电压' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'MaxVoltage'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'内存类型' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'MemoryType'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'最小电压' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'MinVoltage'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'型号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Model'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'其他识别信息' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'OtherIdentifyingInfo'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'零件编号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'PartNumber'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'行位置' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'PositionInRow'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否接通电源' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'PoweredOn'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否可拆卸' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Removable'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否可更换' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Replaceable'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'编号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'SerialNumber'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'SKU号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'SKU'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'SMBIOS内存类型' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'SMBIOSMemoryType'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'速率' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Speed'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'状态' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Status'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'唯一标识符的物理存储器' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Tag'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'总宽' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'TotalWidth'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'类型详细信息' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'TypeDetail'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'版本信息' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerMemory', @level2type=N'COLUMN',@level2name=N'Version'
+GO
+
+
+USE [AllinOne]
+GO
+
+/****** Object:  Table [dbo].[WmiServerDisk]    Script Date: 2022/01/10 09:47:58 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[WmiServerDisk](
+	[TicketNo] [nvarchar](50) NOT NULL,
+	[Seq] [int] NOT NULL,
+	[Availability] [int] NULL,
+	[BytesPerSector] [int] NULL,
+	[Caption] [nvarchar](max) NULL,
+	[CompressionMethod] [nvarchar](max) NULL,
+	[ConfigManagerErrorCode] [int] NULL,
+	[ConfigManagerUserConfig] [bit] NULL,
+	[CreationClassName] [nvarchar](max) NULL,
+	[DefaultBlockSize] [bigint] NULL,
+	[Description] [nvarchar](max) NULL,
+	[DeviceID] [nvarchar](max) NULL,
+	[ErrorCleared] [bit] NULL,
+	[ErrorDescription] [nvarchar](max) NULL,
+	[ErrorMethodology] [nvarchar](max) NULL,
+	[FirmwareRevision] [nvarchar](max) NULL,
+	[Index] [int] NULL,
+	[InterfaceType] [nvarchar](max) NULL,
+	[LastErrorCode] [int] NULL,
+	[Manufacturer] [nvarchar](max) NULL,
+	[MaxBlockSize] [bigint] NULL,
+	[MaxMediaSize] [bigint] NULL,
+	[MediaLoaded] [bit] NULL,
+	[MediaType] [nvarchar](max) NULL,
+	[MinBlockSize] [bigint] NULL,
+	[Model] [nvarchar](max) NULL,
+	[Name] [nvarchar](max) NULL,
+	[NeedsCleaning] [bit] NULL,
+	[NumberOfMediaSupported] [int] NULL,
+	[Partitions] [int] NULL,
+	[PNPDeviceID] [nvarchar](max) NULL,
+	[PowerManagementSupported] [bit] NULL,
+	[SCSIBus] [int] NULL,
+	[SCSILogicalUnit] [int] NULL,
+	[SCSIPort] [int] NULL,
+	[SCSITargetId] [int] NULL,
+	[SectorsPerTrack] [int] NULL,
+	[SerialNumber] [nvarchar](max) NULL,
+	[Signature] [int] NULL,
+	[Size] [bigint] NULL,
+	[Status] [nvarchar](max) NULL,
+	[StatusInfo] [int] NULL,
+	[SystemCreationClassName] [nvarchar](max) NULL,
+	[SystemName] [nvarchar](max) NULL,
+	[TotalCylinders] [bigint] NULL,
+	[TotalHeads] [int] NULL,
+	[TotalSectors] [bigint] NULL,
+	[TotalTracks] [bigint] NULL,
+	[TracksPerCylinder] [int] NULL,
+ CONSTRAINT [PK_WmiServerDisk] PRIMARY KEY CLUSTERED 
+(
+	[TicketNo] ASC,
+	[Seq] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'设备的状态' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Availability'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'在每个扇区的物理磁盘驱动器的字节数）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'BytesPerSector'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'对象的序列号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Caption'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'设备所使用的算法或工具，以支持压缩。' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'CompressionMethod'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Windows配置管理器错误代码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'ConfigManagerErrorCode'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'如果为True，该设备使用用户定义的配置' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'ConfigManagerUserConfig'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'代表所在的类' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'CreationClassName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'此设备默认块大小，以字节为单位' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'DefaultBlockSize'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Description'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'磁盘驱动器与系统中的其他设备的唯一标识符' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'DeviceID'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'如果为True，报告LastErrorCode错误现已清除' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'ErrorCleared'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'关于可能采取的纠正措施记录在LastErrorCode错误，和信息的详细信息' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'ErrorDescription'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'误差检测和校正的类型被此设备支持' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'ErrorMethodology'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'修订制造商分配的磁盘驱动器固件' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'FirmwareRevision'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'给定的驱动器的物理驱动器号。此属性由GetDriveMapInfo方法填补。 0xFF的值表示给定的驱动器不映射到物理驱动器' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Index'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'物理磁盘驱动器的类型 （IDE、sata）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'InterfaceType'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'报告的逻辑设备上一个错误代码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'LastErrorCode'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'制造商名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Manufacturer'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'最大块的大小，以字节为单位，通过该设备访问的媒体' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'MaxBlockSize'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'最大介质尺寸的介质，以KB为单位，由该设备支持' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'MaxMediaSize'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'如果真，媒体为一磁盘驱动器加载，这意味着该设备具有一个可读的文件系统和可访问。对于固定磁盘驱动器，该属性将始终为TRUE' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'MediaLoaded'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'由该设备使用或访问的媒体类型' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'MediaType'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'最小的块大小，以字节为单位，通过该设备访问的媒体' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'MinBlockSize'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'磁盘驱动器的制造商的型号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Model'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'名字' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Name'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'如果真，媒体接入设备需要清洁。不论手动或自动清洗是可能显示在Capabilities属性' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'NeedsCleaning'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'可被支持的或插入的介质最大数量' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'NumberOfMediaSupported'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'此物理磁盘驱动器上的分区是由操作系统识别的数目' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Partitions'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'即插即用逻辑设备的播放设备标识符' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'PNPDeviceID'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'如果为True，该设备可以是电源管理' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'PowerManagementSupported'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'盘驱动器的SCSI总线号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SCSIBus'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'SCSI逻辑单元的磁盘驱动器的号码（LUN）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SCSILogicalUnit'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'盘驱动器的SCSI端口号' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SCSIPort'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'SCSI标识符号码的磁盘驱动器的' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SCSITargetId'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'在每个轨道此物理磁盘驱动器扇区数' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SectorsPerTrack'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'由制造商分配的号来识别物理介质' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SerialNumber'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'磁盘识别。该属性可以被用于识别一个共享资源' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Signature'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'磁盘大小' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Size'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'对象的当前状态' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'Status'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'逻辑设备的状态' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'StatusInfo'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'该作用域计算机的CreationClassName属性的值' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SystemCreationClassName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'系统名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'SystemName'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'物理磁盘驱动器上柱面总数。该值可能不准确' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'TotalCylinders'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'磁盘驱动器上磁头总数。该值可能不准确' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'TotalHeads'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'物理磁盘驱动器上的扇区总数。该值可能不准确' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'TotalSectors'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'物理磁盘驱动器上的曲目总数。该值可能不准确' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'TotalTracks'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'在物理磁盘驱动器上的每个柱面轨迹的数量。该值可能不准确' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'WmiServerDisk', @level2type=N'COLUMN',@level2name=N'TracksPerCylinder'
+GO
+
+
+USE [AllinOne]
+GO
+
+/****** Object:  Table [dbo].[WmiServerLogicalDisk]    Script Date: 2022/01/10 14:22:57 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[WmiServerLogicalDisk](
+	[TicketNo] [nvarchar](50) NOT NULL,
+	[Seq] [int] NOT NULL,
+	[Access] [int] NULL,
+	[Availability] [int] NULL,
+	[BlockSize] [bigint] NULL,
+	[Caption] [nvarchar](max) NULL,
+	[Compressed] [bit] NULL,
+	[ConfigManagerErrorCode] [int] NULL,
+	[ConfigManagerUserConfig] [bit] NULL,
+	[CreationClassName] [nvarchar](max) NULL,
+	[Description] [nvarchar](max) NULL,
+	[DeviceID] [nvarchar](max) NULL,
+	[DriveType] [int] NULL,
+	[ErrorCleared] [bit] NULL,
+	[ErrorDescription] [nvarchar](max) NULL,
+	[ErrorMethodology] [nvarchar](max) NULL,
+	[FileSystem] [nvarchar](max) NULL,
+	[FreeSpace] [bigint] NULL,
+	[LastErrorCode] [int] NULL,
+	[MaximumComponentLength] [int] NULL,
+	[MediaType] [int] NULL,
+	[Name] [nvarchar](max) NULL,
+	[NumberOfBlocks] [bigint] NULL,
+	[PNPDeviceID] [nvarchar](max) NULL,
+	[PowerManagementSupported] [bit] NULL,
+	[ProviderName] [nvarchar](max) NULL,
+	[Purpose] [nvarchar](max) NULL,
+	[QuotasDisabled] [bit] NULL,
+	[QuotasIncomplete] [bit] NULL,
+	[QuotasRebuilding] [bit] NULL,
+	[Size] [bigint] NULL,
+	[Status] [nvarchar](max) NULL,
+	[StatusInfo] [int] NULL,
+	[SupportsDiskQuotas] [bit] NULL,
+	[SupportsFileBasedCompression] [bit] NULL,
+	[SystemCreationClassName] [nvarchar](max) NULL,
+	[SystemName] [nvarchar](max) NULL,
+	[VolumeDirty] [bit] NULL,
+	[VolumeName] [nvarchar](max) NULL,
+	[VolumeSerialNumber] [nvarchar](max) NULL,
+ CONSTRAINT [PK_WmiServerLogicalDisk] PRIMARY KEY CLUSTERED 
+(
+	[TicketNo] ASC,
+	[Seq] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
 
