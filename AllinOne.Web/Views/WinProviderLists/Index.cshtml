@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AllinOne.Entity.WinProviderList>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>显示</h1>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table table-striped table-bordered table-condensed table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Win32Provider)
+        </th>
+        <th class="col-md-4">
+            @Html.DisplayNameFor(model => model.Win32Link)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FieldsReLoad)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.CreateTableSQL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Win32Provider)
+            </td>
+            <td class="col-md-4">
+                @Html.DisplayFor(modelItem => item.Win32Link)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FieldsReLoad)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.CreateTableSQL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>*@
+            <td>
+                @Html.ActionLink("开爬", "GetProviderFields", new { id = item.ID, Link = item.Win32Link}) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>

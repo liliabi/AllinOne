@@ -19,11 +19,16 @@ namespace AllinOne.Entity
         public virtual DbSet<WmiServerMemory> WmiServerMemory { get; set; }
         public virtual DbSet<WmiServerDisk> WmiServerDisk { get; set; }
         public virtual DbSet<WmiServerLogicalDisk> WmiServerLogicalDisk { get; set; }
+        public virtual DbSet<WinProviderList> WinProviderList { get; set; }
+        public virtual DbSet<WinProviderStructure> WinProviderStructure { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WmiServerList>()
                 .Property(e => e.Ver)
                 .IsFixedLength();
+            modelBuilder.Entity<WinProviderList>()
+                .Property(e => e.FieldsReLoad)
+                .IsUnicode(false);
         }
 
         public DbSet<ViewModel.RESTfulResult> RESTfulResults { get; set; }

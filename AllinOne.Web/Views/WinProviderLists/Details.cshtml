@@ -1,0 +1,56 @@
+﻿@model AllinOne.Entity.WinProviderList
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1>WinProviderList明细</h1>
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Win32Provider)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Win32Provider)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Win32Link)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Win32Link)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FieldsReLoad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FieldsReLoad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateTableSQL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateTableSQL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

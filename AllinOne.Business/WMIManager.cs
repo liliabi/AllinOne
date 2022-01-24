@@ -49,7 +49,7 @@ namespace AllinOne.Business
             }
 
         }
-        ManagementScope scope;
+        //ManagementScope scope;
         ObjectQuery objectQuery;
         public RESTfulResult GetServiceInfo(string sguid)
         {

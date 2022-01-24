@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllinOne.Repository", "Alli
 		{A1569C56-6911-4A31-ABBA-E2F8146E48F5} = {A1569C56-6911-4A31-ABBA-E2F8146E48F5}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllinOne.WebSpider", "AllinOne.WebSpider\AllinOne.WebSpider.csproj", "{05B1DF8E-0193-42B2-B21A-3F5B586DA5C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{9F4C8785-E2BE-4025-B21D-D2F93B323113}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F4C8785-E2BE-4025-B21D-D2F93B323113}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F4C8785-E2BE-4025-B21D-D2F93B323113}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B1DF8E-0193-42B2-B21A-3F5B586DA5C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B1DF8E-0193-42B2-B21A-3F5B586DA5C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B1DF8E-0193-42B2-B21A-3F5B586DA5C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B1DF8E-0193-42B2-B21A-3F5B586DA5C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

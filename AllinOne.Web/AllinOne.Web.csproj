@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WinProviderListsController.cs" />
     <Compile Include="Controllers\WMIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -168,6 +169,11 @@
     <Content Include="Views\Error\Page500.cshtml" />
     <Content Include="Views\WMI\Ping.cshtml" />
     <Content Include="Views\WMI\GetServiceInfo.cshtml" />
+    <Content Include="Views\WinProviderLists\Create.cshtml" />
+    <Content Include="Views\WinProviderLists\Delete.cshtml" />
+    <Content Include="Views\WinProviderLists\Details.cshtml" />
+    <Content Include="Views\WinProviderLists\Edit.cshtml" />
+    <Content Include="Views\WinProviderLists\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
