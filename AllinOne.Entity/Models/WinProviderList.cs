@@ -23,6 +23,7 @@ namespace AllinOne.Entity
         [StringLength(1)]
         public string FieldsReLoad { get; set; }
 
+        public string Xpath { get; set; }
         public string CreateTableSQL { get; set; }
 
         public string Comment { get; set; }

@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using AllinOne.Business.WebSpider;
+﻿using AllinOne.Business;
 using AllinOne.Entity;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Web.Mvc;
 
 namespace AllinOne.Web.Controllers
 {
     [CustomHandleErrorAttribute]
     public class WinProviderListsController : Controller
     {
-        private AllinOneModel db = new AllinOneModel();
+        private BusiWinProviderLists busiWinProviderLists = new BusiWinProviderLists();
 
         #region CURD
         // GET: WinProviderLists
         public ActionResult Index()
         {
-            return View(db.WinProviderList.ToList());
+            var WinProviderLists =  busiWinProviderLists.BusiGetAllProviderInfo();
+            return View(WinProviderLists);
         }
 
         // GET: WinProviderLists/Details/5
@@ -30,12 +27,12 @@ namespace AllinOne.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WinProviderList winProviderList = db.WinProviderList.Find(id);
-            if (winProviderList == null)
+            var WinProviderLists = busiWinProviderLists.BusiGetOneProviderInfo(id);
+            if (WinProviderLists == null)
             {
                 return HttpNotFound();
             }
-            return View(winProviderList);
+            return View(WinProviderLists);
         }
 
         // GET: WinProviderLists/Create
@@ -46,7 +43,7 @@ namespace AllinOne.Web.Controllers
                 new SelectListItem{Text="是",Value="Y" },
                 new SelectListItem{Text="否",Value="N"}
             };
-            ViewData["FieldsReLoad"] = new SelectList(selects, "Value", "Text", "N");
+            ViewData["FieldsReLoad"] = new SelectList(selects, "Value", "Text", "Y");
             return View();
         }
 
@@ -55,12 +52,11 @@ namespace AllinOne.Web.Controllers
         // 更多详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Win32Provider,Win32Link,FieldsReLoad,Comment")] WinProviderList winProviderList)
+        public ActionResult Create([Bind(Include = "Win32Provider,Win32Link,FieldsReLoad,Xpath,Comment")] WinProviderList winProviderList)
         {
             if (ModelState.IsValid)
             {
-                db.WinProviderList.Add(winProviderList);
-                db.SaveChanges();
+                busiWinProviderLists.BusiInsertProviderInfo(winProviderList);
                 return RedirectToAction("Index");
             }
 
@@ -74,7 +70,7 @@ namespace AllinOne.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WinProviderList winProviderList = db.WinProviderList.Find(id);
+            var winProviderList = busiWinProviderLists.BusiGetOneProviderInfo(id);
             if (winProviderList == null)
             {
                 return HttpNotFound();
@@ -87,13 +83,13 @@ namespace AllinOne.Web.Controllers
         // 更多详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Win32Provider,Win32Link,FieldsReLoad,Comment")] WinProviderList winProviderList)
+        public ActionResult Edit([Bind(Include = "ID,Win32Provider,Win32Link,FieldsReLoad,Xpath,Comment")] WinProviderList winProviderList)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(winProviderList).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    busiWinProviderLists.BusiUpdateProviderInfo(winProviderList);
+                    return RedirectToAction("Index");
+                
             }
             return View(winProviderList);
         }
@@ -105,7 +101,7 @@ namespace AllinOne.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            WinProviderList winProviderList = db.WinProviderList.Find(id);
+            var winProviderList = busiWinProviderLists.BusiGetOneProviderInfo(id);
             if (winProviderList == null)
             {
                 return HttpNotFound();
@@ -118,29 +114,19 @@ namespace AllinOne.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            WinProviderList winProviderList = db.WinProviderList.Find(id);
-            db.WinProviderList.Remove(winProviderList);
-            db.SaveChanges();
+            busiWinProviderLists.BusiDeleteProviderInfo(id);
             return RedirectToAction("Index");
         }
         #endregion
 
         public ActionResult GetProviderFields(int id, string Link)
         {
-            CreateSpider spider = new CreateSpider();
             RequestOptions options = new RequestOptions();
             options.Uri = new Uri(Link);
-            Dictionary<string, string> dic = spider.InitSpider(options);
-            spider.InsertToDb(id, dic);
+            options.winProviderList = busiWinProviderLists.BusiGetOneProviderInfo(id);
+            Dictionary<string, string> dic = busiWinProviderLists.InitSpider(options);
+            busiWinProviderLists.BusiInsertProviderStructure(id, dic);
             return RedirectToAction("Index");
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

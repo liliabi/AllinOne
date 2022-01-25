@@ -54,7 +54,6 @@ namespace AllinOne.Web.Controllers
 
 
         #region CURD Server List
-        [CustomHandleErrorAttribute]
         public ActionResult List()
         {
             var wmi = wmiManager.GetAll();
@@ -68,7 +67,6 @@ namespace AllinOne.Web.Controllers
         }
 
         // GET: WMI/Create
-        [CustomHandleErrorAttribute]
         public ActionResult Create()
         {
             return View();

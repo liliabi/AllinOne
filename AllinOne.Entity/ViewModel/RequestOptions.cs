@@ -70,5 +70,9 @@ namespace AllinOne.Entity
         /// 异步参数数据
         /// </summary>
         public string XHRParams { get; set; }
+        /// <summary>
+        /// HtmlAgilityyPack解析路径
+        /// </summary>
+        public WinProviderList winProviderList { get; set; }
     }
 }

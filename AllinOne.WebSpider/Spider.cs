@@ -9,7 +9,7 @@ namespace AllinOne.WebSpider
 {
     public class Spider
     {
-        public string RequestAction(RequestOptions options)
+        public static string RequestAction(RequestOptions options)
         {
             string result = string.Empty;
             //IWebProxy proxy = GetProxy();
