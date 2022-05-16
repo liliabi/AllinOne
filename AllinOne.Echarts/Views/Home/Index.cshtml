@@ -1,0 +1,498 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div id="main" style="height:400px;"></div>
+    </div>
+    <div class="col-md-6">
+        <div id="main1" style="height:400px;"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="main2" style="height:400px;"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div id="main3" style="height:400px;"></div>
+    </div>
+    <div class="col-md-8">
+        <div id="main4" style="height:400px;"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="main5" style="height:400px;"></div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: ''
+        },
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    var myChart1 = echarts.init(document.getElementById('main1'));
+
+    // 指定图表的配置项和数据
+    var option1 = {
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                smooth: true
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart1.setOption(option1);
+
+
+    var myChart2 = echarts.init(document.getElementById('main2'));
+
+    // 指定图表的配置项和数据
+    var option2 = {
+        color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+        title: {
+            text: 'Gradient Stacked Area Chart'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Line 1',
+                type: 'line',
+                stack: 'Total',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: 'rgb(128, 255, 165)'
+                        },
+                        {
+                            offset: 1,
+                            color: 'rgb(1, 191, 236)'
+                        }
+                    ])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [140, 232, 101, 264, 90, 340, 250]
+            },
+            {
+                name: 'Line 2',
+                type: 'line',
+                stack: 'Total',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: 'rgb(0, 221, 255)'
+                        },
+                        {
+                            offset: 1,
+                            color: 'rgb(77, 139, 255)'
+                        }
+                    ])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [120, 282, 131, 234, 220, 340, 310]
+            },
+            {
+                name: 'Line 3',
+                type: 'line',
+                stack: 'Total',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: 'rgb(55, 162, 255)'
+                        },
+                        {
+                            offset: 1,
+                            color: 'rgb(136, 21, 219)'
+                        }
+                    ])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [320, 132, 201, 334, 190, 130, 220]
+            },
+            {
+                name: 'Line 4',
+                type: 'line',
+                stack: 'Total',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: 'rgb(255, 0, 135)'
+                        },
+                        {
+                            offset: 1,
+                            color: 'rgb(135, 0, 157)'
+                        }
+                    ])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [220, 402, 231, 134, 190, 230, 120]
+            },
+            {
+                name: 'Line 5',
+                type: 'line',
+                stack: 'Total',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: 'rgb(255, 191, 0)'
+                        },
+                        {
+                            offset: 1,
+                            color: 'rgb(224, 62, 76)'
+                        }
+                    ])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [220, 302, 181, 234, 210, 290, 150]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart2.setOption(option2);
+
+    var myChart3 = echarts.init(document.getElementById('main3'));
+    // 指定图表的配置项和数据
+    var option3 = {
+        tooltip: {
+            formatter: '{a} <br/>{b} : {c}%'
+        },
+        series: [
+            {
+                name: 'Pressure',
+                type: 'gauge',
+                progress: {
+                    show: true
+                },
+                detail: {
+                    valueAnimation: true,
+                    formatter: '{value}'
+                },
+                data: [
+                    {
+                        value: 50,
+                        name: 'SCORE'
+                    }
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart3.setOption(option3);
+    gaugeData = [
+        {
+            value: 20,
+            name: 'SCORE',
+        }];
+    setInterval(function () {
+        gaugeData[0].value = +(Math.random() * 100).toFixed(2);
+        myChart3.setOption({
+            series: [
+                {
+                    data: gaugeData
+                }
+            ]
+        });
+    }, 2000);
+
+    var myChart4 = echarts.init(document.getElementById('main4'));
+    // 指定图表的配置项和数据
+    var option4 = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+            source: [
+                ['product', '2012', '2013', '2014', '2015'],
+                ['Matcha Latte', 41.1, 30.4, 65.1, 53.3],
+                ['Milk Tea', 86.5, 92.1, 85.7, 83.1],
+                ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4]
+            ]
+        },
+        xAxis: [
+            { type: 'category', gridIndex: 0 },
+            { type: 'category', gridIndex: 1 }
+        ],
+        yAxis: [{ gridIndex: 0 }, { gridIndex: 1 }],
+        grid: [{ bottom: '55%' }, { top: '55%' }],
+        series: [
+            // These series are in the first grid.
+            { type: 'bar', seriesLayoutBy: 'row' },
+            { type: 'bar', seriesLayoutBy: 'row' },
+            { type: 'bar', seriesLayoutBy: 'row' },
+            // These series are in the second grid.
+            { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
+            { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
+            { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
+            { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart4.setOption(option4);
+    const colors = ['#5470C6', '#91CC75', '#EE6666'];
+    var myChart5 = echarts.init(document.getElementById('main5'));
+    var option5 = {
+        title: {
+            text: 'Temperature Change in the Coming Week'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        grid: {
+            show: 'true',
+            //containLabel:'true',
+            //borderColor: 'red',
+            borderWidth: 2
+        },
+        legend: {},
+        //toolbox: {
+        //    show: true,
+        //    feature: {
+        //        dataZoom: {
+        //            yAxisIndex: 'none'
+        //        },
+        //        dataView: { readOnly: false },
+        //        magicType: { type: ['line', 'bar'] },
+        //        restore: {},
+        //        saveAsImage: {}
+        //    }
+        //},
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['13-18', '13-19', '13-20', '13-21', '13-22', '13-23', '13-24']
+        },
+        yAxis: [
+            {
+                type: 'value',
+                name: '温度',
+                position: 'left',
+                alignTicks: true,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        //color: colors[2]
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value} °C',
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        // 使用深浅的间隔色
+                        color: ['#cc00ff'],
+                        type: 'dashed',
+                    },
+                }
+            },
+            //{
+            //    type: 'value',
+            //    name: 'Evaporation',
+            //    position: 'right',
+            //    alignTicks: true,
+            //    axisLine: {
+            //        show: true,
+            //        lineStyle: {
+            //            color: colors[0]
+            //        }
+            //    },
+            //    axisLabel: {
+            //        formatter: '{value} ml'
+            //    }
+            //},
+            //{
+            //    type: 'value',
+            //    name: 'Precipitation',
+            //    position: 'right',
+            //    alignTicks: true,
+            //    offset: 70,
+            //    axisLine: {
+            //        show: true,
+            //        lineStyle: {
+            //            color: colors[1]
+            //        }
+            //    },
+            //    axisLabel: {
+            //        formatter: '{value} ml'
+            //    }
+            //},
+            
+        ],
+        color: ['red', 'green', 'red', 'black', 'purple'],
+        series: [
+            {
+                name: 'line1',
+                type: 'line',
+                data: [2, 2, 2, 2, 2, 2, 2, 2, 2],
+
+                lineStyle: {
+                    //color: '#66cc00',
+                    width: 3,
+                    type: 'dotted'
+                },
+                symbol: 'circle',
+            },
+            {
+                name: 'line2',
+                type: 'line',
+                //yAxisIndex: 2,
+                data: [7, 7, 7, 7, 7, 7, 7, 7, 7],
+                lineStyle: {
+                    //color: '#ff0000',
+                    width: 3,
+                    type: 'dotted'
+                },
+            },
+            {
+                name: 'line3',
+                type: 'line',
+                //yAxisIndex: 1,
+                data: [13, 13, 13, 13, 13, 13, 13, 13, 13],
+                lineStyle: {
+                    //color: '#ff0000',
+                    width: 3,
+                    type: 'dotted'
+                },
+            },
+            {
+                name: '成交',
+                type: 'line',
+                //smooth: true,
+                data: [10, 12, 10, 12, 10, 12, 8],
+                symbol: 'circle',
+                symbolSize: 10,
+                lineStyle: {
+                    color: 'blue',
+                    width: 3,
+                    //type: 'dotted'
+                },
+            }
+        ]
+    };
+    myChart5.setOption(option5);
+</script>

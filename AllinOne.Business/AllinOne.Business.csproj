@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\SPC.cs" />
     <Compile Include="BusiWinProviderLists.cs" />
     <Compile Include="Common\GetOrderNumber.cs" />
     <Compile Include="Common\SearchType.cs" />
